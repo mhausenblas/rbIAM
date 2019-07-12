@@ -89,7 +89,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#welcome-to-mkdocs" tabindex="1" class="md-skip">
+      <a href="#overview" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -253,16 +253,36 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#commands" title="Commands" class="md-nav__link">
-    Commands
+  <a href="#motivation" title="Motivation" class="md-nav__link">
+    Motivation
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-layout" title="Project layout" class="md-nav__link">
-    Project layout
+  <a href="#terminology" title="Terminology" class="md-nav__link">
+    Terminology
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iam" title="IAM" class="md-nav__link">
+    IAM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rbac" title="RBAC" class="md-nav__link">
+    RBAC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -298,16 +318,36 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#commands" title="Commands" class="md-nav__link">
-    Commands
+  <a href="#motivation" title="Motivation" class="md-nav__link">
+    Motivation
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-layout" title="Project layout" class="md-nav__link">
-    Project layout
+  <a href="#terminology" title="Terminology" class="md-nav__link">
+    Terminology
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iam" title="IAM" class="md-nav__link">
+    IAM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rbac" title="RBAC" class="md-nav__link">
+    RBAC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -330,25 +370,22 @@
                   <a href="https://github.com/mhausenblas/rbIAM/edit/master/docs/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="welcome-to-mkdocs">Welcome to MkDocs<a class="headerlink" href="#welcome-to-mkdocs" title="Permanent link">&para;</a></h1>
-<p>For full documentation visit <a href="https://mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs help</code> - Print this help message.</li>
-</ul>
-<h2 id="project-layout">Project layout<a class="headerlink" href="#project-layout" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">mkdocs</span><span class="p">.</span><span class="n">yml</span>    <span class="o">#</span> <span class="n">The</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">.</span>
-<span class="n">docs</span><span class="o">/</span>
-    <span class="k">index</span><span class="p">.</span><span class="n">md</span>  <span class="o">#</span> <span class="n">The</span> <span class="n">documentation</span> <span class="n">homepage</span><span class="p">.</span>
-    <span class="p">...</span>       <span class="o">#</span> <span class="n">Other</span> <span class="n">markdown</span> <span class="n">pages</span><span class="p">,</span> <span class="n">images</span> <span class="k">and</span> <span class="n">other</span> <span class="n">files</span><span class="p">.</span>
-</pre></div>
-</td></tr></table>
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>When using Amazon Elastic Kubernetes Service (<a href="https://aws.amazon.com/eks/">EKS</a>) you will at some point ask yourself: how does AWS Identity and Access Management (<a href="https://aws.amazon.com/iam/">IAM</a>) and Kubernetes Role-based access control (<a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/">RBAC</a>) play together. Do they overlap? Are they complementary? Are there dependencies.</p>
+<p><code>rbIAM</code> aims to help you navigate this space.</p>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>Let's have a look at a concrete example, for motivation. Take the <a href="https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit">Fluent Bit output plugin for Amazon Kinesis Data Firehose</a>. In <a href="https://aws.amazon.com/blogs/opensource/centralized-container-logging-fluent-bit/">Centralized Container Logging with Fluent Bit</a> we described how to use it. The setup, in a nutshell, is as follows:</p>
+<p><img alt="Container log shipping with Fluent Bit on EKS" src="img/cclfb.png" /></p>
+<p>The Fluent Bit is deployed as a <code>DaemonSet</code> as per <a href="https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset.yaml">eks-fluent-bit-daemonset.yaml</a> and:</p>
+<ol>
+<li>depends on an IAM policy, defined in <a href="https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset-policy.json">eks-fluent-bit-daemonset-policy.json</a>, giving it the permissions to write to the Kinesis Data Firehose, manage log streams in CloudWatch, etc., as well as</li>
+<li>a Kubernetes role, defined in <a href="https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset-rbac.yaml">eks-fluent-bit-daemonset-rbac.yaml</a>, giving it the permissions to list and query pods and namespaces, in the cluster, so that it can receive the logs from the containers.</li>
+</ol>
+<h2 id="terminology">Terminology<a class="headerlink" href="#terminology" title="Permanent link">&para;</a></h2>
+<h3 id="iam">IAM<a class="headerlink" href="#iam" title="Permanent link">&para;</a></h3>
+<p>Principal, role, policy, STS</p>
+<h3 id="rbac">RBAC<a class="headerlink" href="#rbac" title="Permanent link">&para;</a></h3>
+<p>User, service account, role, role binding</p>
                 
                   
                 
