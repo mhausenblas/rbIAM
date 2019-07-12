@@ -25,5 +25,6 @@ markdown_extensions:
     - toc:
         permalink: true
     - admonition
+    - def_list
     - codehilite:
         linenums: true

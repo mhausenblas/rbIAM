@@ -19,10 +19,40 @@ The Fluent Bit is deployed as a `DaemonSet` as per [eks-fluent-bit-daemonset.yam
 
 ### IAM
 
-Principal, role, policy, STS
+Principal
+
+:   An entity in AWS able to carry out an action and/or access a resource. The  
+    entity can be an [account root user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html), an [IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html), or a **role**.
+
+Role
+
+:   An entity that, in contrast to an IAM user or root user which are uniquely associated with a person, is intended to be assumable by someone. A role does not have long-term credentials, but rather, when assuming a role, it provides you with [temporary security credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html) for the duration of a session.
+
+Policy
+
+:   A JSON document using the [IAM policy language](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) that either defines actions and resources a **role** can use (permissions policy) or define who is allowed to assume a **role**, in which case the trusted entity is included in the policy as the **principal** (trust policy).
+
 
 ### RBAC
 
-User, service account, role, role binding
+User
+
+:   A human being that is using Kubernetes, either via CLI tools such as 
+    `kubectl`, using the HTTP API of the API server, or via apps.
+
+Service account
+
+:   Represents processes running in pods that wish to interact with the API     
+    server.
+
+Role
+
+:   Defines a set of strictly additive rules, representing a set of permissions.
+
+Role binding
+
+:   Grants the permissions defined in a **role** to an entity (user, group, or      service account).
+
+For example:
 
 ![Kubernetes RBAC](img/rbac.png)
