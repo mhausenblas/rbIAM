@@ -1,0 +1,29 @@
+# See https://squidfunk.github.io/mkdocs-material/ for options
+site_name: rbIAM
+site_description: 'Unified AWS IAM & Kubernetes RBAC access control'
+site_author: 'Michael Hausenblas'
+repo_name: 'mhausenblas/rbIAM'
+repo_url: 'https://github.com/mhausenblas/rbIAM'
+copyright: 'Copyright &copy; 2019 AWS'
+nav:
+    - Home: index.md
+theme:
+    name: 'material'
+    custom_dir: 'theme'
+    favicon: 'assets/images/favicon.png'
+    logo:
+      icon: 'security'
+    palette:
+      primary: 'white'
+      accent: 'amber'
+    highlightjs: true
+    hljs_languages:
+        - yaml
+        - json
+        - bash
+markdown_extensions:
+    - toc:
+        permalink: true
+    - admonition
+    - codehilite:
+        linenums: true

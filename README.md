@@ -1,2 +1,5 @@
 # rbIAM
-A unified IAM+Kubernetes RBAC access control exploration tool
+
+A unified AWS IAM & Kubernetes RBAC access control exploration tool.
+
+
