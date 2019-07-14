@@ -6,7 +6,9 @@ repo_name: 'mhausenblas/rbIAM'
 repo_url: 'https://github.com/mhausenblas/rbIAM'
 copyright: 'Copyright &copy; 2019 AWS'
 nav:
-    - Home: index.md
+    - Overview: index.md
+    - Getting Started: getting-started.md
+    - Terminology: terminology.md
 theme:
     name: 'material'
     custom_dir: 'theme'
@@ -26,5 +28,6 @@ markdown_extensions:
         permalink: true
     - admonition
     - def_list
+    - attr_list 
     - codehilite:
         linenums: true
