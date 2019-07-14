@@ -35,18 +35,18 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
-      <link rel="shortcut icon" href="assets/images/favicon.png">
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
     
     
       
-        <title>rbIAM</title>
+        <title>Terminology - rbIAM</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/application.0284f74d.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.0284f74d.css">
       
-        <link rel="stylesheet" href="assets/stylesheets/application-palette.01803549.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.01803549.css">
       
       
         
@@ -55,7 +55,7 @@
       
     
     
-      <script src="assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
@@ -64,7 +64,7 @@
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
-    <link rel="stylesheet" href="assets/fonts/material-icons.css">
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
     
     
@@ -89,7 +89,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#overview" tabindex="1" class="md-skip">
+      <a href="#terminology" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -98,7 +98,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="." title="rbIAM" class="md-header-nav__button md-logo">
+        <a href=".." title="rbIAM" class="md-header-nav__button md-logo">
           
             <i class="md-icon">security</i>
           
@@ -115,7 +115,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Overview
+                Terminology
               
             </span>
           
@@ -190,7 +190,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="." title="rbIAM" class="md-nav__button md-logo">
+    <a href=".." title="rbIAM" class="md-nav__button md-logo">
       
         <i class="md-icon">security</i>
       
@@ -224,6 +224,30 @@
       
       
 
+
+  <li class="md-nav__item">
+    <a href=".." title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../getting-started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
@@ -235,11 +259,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Overview
+        Terminology
       </label>
     
-    <a href="." title="Overview" class="md-nav__link md-nav__link--active">
-      Overview
+    <a href="./" title="Terminology" class="md-nav__link md-nav__link--active">
+      Terminology
     </a>
     
       
@@ -253,15 +277,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#motivation" title="Motivation" class="md-nav__link">
-    Motivation
+  <a href="#markdown" title="IAM" class="md-nav__link">
+    IAM
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-cases" title="Use cases" class="md-nav__link">
-    Use cases
+  <a href="#markdown" title="RBAC" class="md-nav__link">
+    RBAC
   </a>
   
 </li>
@@ -274,30 +298,6 @@
   
 </nav>
     
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="getting-started/" title="Getting Started" class="md-nav__link">
-      Getting Started
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="terminology/" title="Terminology" class="md-nav__link">
-      Terminology
-    </a>
   </li>
 
     
@@ -322,15 +322,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#motivation" title="Motivation" class="md-nav__link">
-    Motivation
+  <a href="#markdown" title="IAM" class="md-nav__link">
+    IAM
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-cases" title="Use cases" class="md-nav__link">
-    Use cases
+  <a href="#markdown" title="RBAC" class="md-nav__link">
+    RBAC
   </a>
   
 </li>
@@ -351,23 +351,70 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mhausenblas/rbIAM/edit/master/docs/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/mhausenblas/rbIAM/edit/master/docs/terminology.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
-<p>When using Amazon Elastic Kubernetes Service (<a href="https://aws.amazon.com/eks/">EKS</a>) you will at some point ask yourself: how does AWS Identity and Access Management (<a href="https://aws.amazon.com/iam/">IAM</a>) and Kubernetes Role-based access control (<a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/">RBAC</a>) play together. Do they overlap? Are they complementary? Are there dependencies.</p>
-<p><code>rbIAM</code> aims to help you navigate this space.</p>
-<p>If you want to learn more about the Why then read on and/or check out the <a href="/terminology">terminology</a>, otherwise check out the <a href="/getting-started">getting started</a> guide now.</p>
-<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
-<p>Let's have a look at a concrete example, for motivation. Take the <a href="https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit">Fluent Bit output plugin for Amazon Kinesis Data Firehose</a>. In <a href="https://aws.amazon.com/blogs/opensource/centralized-container-logging-fluent-bit/">Centralized Container Logging with Fluent Bit</a> we described how to use it. The setup, in a nutshell, is as follows:</p>
-<p><img alt="Container log shipping with Fluent Bit on EKS" src="img/cclfb.png" style="width:600px; display: block; margin: 30px auto 50px auto; padding: 30px 50px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
-<p>The Fluent Bit is deployed as a <code>DaemonSet</code> as per <a href="https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset.yaml">eks-fluent-bit-daemonset.yaml</a> and:</p>
-<ol>
-<li>depends on an IAM policy, defined in <a href="https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset-policy.json">eks-fluent-bit-daemonset-policy.json</a>, giving it the permissions to write to the Kinesis Data Firehose, manage log streams in CloudWatch, etc., as well as</li>
-<li>a Kubernetes role, defined in <a href="https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset-rbac.yaml">eks-fluent-bit-daemonset-rbac.yaml</a>, giving it the permissions to list and query pods and namespaces, in the cluster, so that it can receive the logs from the containers.</li>
-</ol>
-<h2 id="use-cases">Use cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h2>
+                <h1 id="terminology">Terminology<a class="headerlink" href="#terminology" title="Permanent link">&para;</a></h1>
+<h2 id="markdown">AWS Identity and Access Management (IAM)<a class="headerlink" href="#markdown" title="Permanent link">&para;</a></h2>
+<p>Conceptually, AWS IAM looks as follows:</p>
 <p><em>TBD</em></p>
+<dl>
+<dt>Principal</dt>
+<dd>
+<p>An entity in AWS able to carry out an action and/or access a resource. The<br />
+entity can be an <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html">account root user</a>, an <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html">IAM user</a>, or a <strong>role</strong>.</p>
+</dd>
+<dt>Role</dt>
+<dd>
+<p>An entity that, in contrast to an IAM user or root user which are uniquely associated with a person, is intended to be assumable by someone. A role does not have long-term credentials, but rather, when assuming a role, it provides you with <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html">temporary security credentials</a> for the duration of a session.</p>
+</dd>
+<dt>Policy</dt>
+<dd>
+<p>A JSON document using the <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html">IAM policy language</a> that either defines actions and resources a <strong>role</strong> can use (permissions policy) or define who is allowed to assume a <strong>role</strong>, in which case the trusted entity is included in the policy as the <strong>principal</strong> (trust policy).</p>
+</dd>
+</dl>
+<p>For example, for our Fluent Bit output plugin deployed as a <code>DaemonSet</code>, the RBAC regime looks as follows:</p>
+<p><em>TBD</em></p>
+<h2 id="markdown">Kubernetesd Role-based Access Control (RBAC)<a class="headerlink" href="#markdown" title="Permanent link">&para;</a></h2>
+<p>Conceptually, Kubernetes RBAC looks as follows:</p>
+<p><img alt="Kubernetes RBAC" src="../img/rbac-concept.png" style="width:400px; display: block; margin: 30px auto 50px auto; padding: 30px 50px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
+<p>The access an entity has concerning a resource is determined through two indirections: roles (define access rules) and role binding (attach or bind a role to an entity). More formally:</p>
+<dl>
+<dt>Entity</dt>
+<dd>
+<p>A user, group, or a Kubernetes <a href="https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/">service account</a>.</p>
+</dd>
+<dt>User</dt>
+<dd>
+<p>A human being that is using Kubernetes, either via CLI tools such as 
+<code>kubectl</code>, using the HTTP API of the API server, or indirectly, via cloud native apps.</p>
+</dd>
+<dt>Service account</dt>
+<dd>
+<p>Represents processes running in pods that wish to interact with the
+API server; a namespaced Kubernetes resource, representing the identity of an app.</p>
+</dd>
+<dt>Resource</dt>
+<dd>
+<p>A Kubernetes abstraction, representing operational aspects. Can be 
+namespaced, for example a pod (co-scheduled containers), a service (east-west load balancer), or a deployment (pod supervisor for app life cycle management) or cluster-wide, such as nodes or namespaces themselves.</p>
+</dd>
+<dt>Role</dt>
+<dd>
+<p>Defines a set of strictly additive rules, representing a set of permissions.
+These permissions define what actions an <strong>entity</strong> is allowed to carry out
+with respect to a set of resources. Can be namespaced (then the role is only valid in the context of said namespace) or cluster wide.</p>
+</dd>
+<dt>Role binding</dt>
+<dd>
+<p>Grants the permissions defined in a <strong>role</strong> to an <strong>entity</strong>. Can be
+namespaced (then the binding is only valid in the context of said namespace
+or cluster wide. Note that it is perfectly possible and even desirable to define a cluster-wide role and then used a (namespaced) role binding. This allows straight-forward re-use of roles across namespaces.</p>
+</dd>
+</dl>
+<p>For example, for our Fluent Bit output plugin deployed as a <code>DaemonSet</code>, the RBAC regime looks as follows:</p>
+<p><img alt="Kubernetes RBAC" src="../img/rbac-example.png" style="width:430px; display: block; margin: 30px auto 50px auto; padding: 30px 60px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
+<p>In a nutshell: the Fluent Bit output plugin, using the <code>default:fluent-bit</code> service account, is permitted to read and list pods in the default namespace.</p>
                 
                   
                 
@@ -388,20 +435,20 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-        
-          <a href="getting-started/" title="Getting Started" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../getting-started/" title="Getting Started" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
-                  Next
+                  Previous
                 </span>
                 Getting Started
               </span>
             </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
           </a>
+        
         
       </nav>
     </div>
@@ -427,9 +474,9 @@
       
     </div>
     
-      <script src="assets/javascripts/application.245445c6.js"></script>
+      <script src="../assets/javascripts/application.245445c6.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
     
   </body>
