@@ -2,7 +2,7 @@
 
 In the following we define the terms used in AWS IAM and Kubernetes RBAC, along with the [motivational example](../#motivation), to illustrate what exactly each term means.
 
-## AWS Identity and Access Management (IAM) { #markdown data-toc-label='IAM' }
+## AWS Identity and Access Management (IAM) { #markdown data-toc-label='IAM terms' }
 
 Conceptually, AWS IAM looks as follows: the **access** an identity—such as a user or role—has concerning an AWS service or resource is determined through the attached policies that list allowed actions on resources. 
 
@@ -35,7 +35,7 @@ For example, for our Fluent Bit output plugin deployed as a `DaemonSet` in EKS, 
 In a nutshell: the Fluent Bit output plugin, running in a container part of a pod that is running on an EC2 instance part of a node group with a role `eksctl-fluent-bit-demo-nodegroup-ng-2fb6f1a-NodeInstanceRole-P6QXJ5EYS6` is permitted to perform the `PutRecordBatch` action in Firehose; in fact, with said policy, the Fluent Bit plugin is allowed to put records into *any* delivery stream, since the resource has not been limited to a specific one.
 
 
-## Kubernetes Role-based Access Control (RBAC) { #markdown data-toc-label='RBAC' }
+## Kubernetes Role-based Access Control (RBAC) { #markdown data-toc-label='RBAC terms' }
 
 Conceptually, Kubernetes RBAC looks as follows: the **access** an entity—such as a user or service account—has concerning a Kubernetes resource is determined through two indirections: roles (which define access rules) and role bindings (attaching or binding a role to an entity). 
 
