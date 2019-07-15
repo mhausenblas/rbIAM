@@ -357,9 +357,10 @@
                 <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
 <p>When using Amazon Elastic Kubernetes Service (<a href="https://aws.amazon.com/eks/">EKS</a>) you will at some point ask yourself: how does AWS Identity and Access Management (<a href="https://aws.amazon.com/iam/">IAM</a>) and Kubernetes Role-based access control (<a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/">RBAC</a>) play together. Do they overlap? Are they complementary? Are there dependencies.</p>
 <p><code>rbIAM</code> aims to help you navigate this space.</p>
-<p>If you want to learn more about the Why then read on and/or check out the <a href="terminology/">terminology</a>, otherwise check out the <a href="getting-started/">getting started</a> guide now.</p>
+<p>If you want to learn more about the Why then read on here. For more background, peruse the <a href="terminology/">terminology</a>, and otherwise check out the <a href="getting-started/">getting started</a> guide now.</p>
 <h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
-<p>Let's have a look at a concrete example, for motivation. Take the <a href="https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit">Fluent Bit output plugin for Amazon Kinesis Data Firehose</a>. In <a href="https://aws.amazon.com/blogs/opensource/centralized-container-logging-fluent-bit/">Centralized Container Logging with Fluent Bit</a> we described how to use it. The setup, in a nutshell, is as follows:</p>
+<p>Let's have a look at a concrete example, for motivation. Take the <a href="https://github.com/aws/amazon-kinesis-firehose-for-fluent-bit">Fluent Bit output plugin for Amazon Kinesis Data Firehose</a>. In <a href="https://aws.amazon.com/blogs/opensource/centralized-container-logging-fluent-bit/">Centralized Container Logging with Fluent Bit</a> we described how to use it.</p>
+<p>The setup, on a high level, is as follows:</p>
 <p><img alt="Container log shipping with Fluent Bit on EKS" src="img/cclfb.png" style="width:600px; display: block; margin: 30px auto 50px auto; padding: 30px 50px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <p>The Fluent Bit is deployed as a <code>DaemonSet</code> as per <a href="https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset.yaml">eks-fluent-bit-daemonset.yaml</a> and:</p>
 <ol>
@@ -368,8 +369,16 @@
 </ol>
 <p>Taken together, it looks as follows:</p>
 <p><img alt="IAM RBAC example" src="img/iam-rbac-example.png" style="width:600px; display: block; margin: 30px auto 50px auto; padding: 30px 50px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
+<p>The Fluent Bit plugin has, through the Kubernetes RBAC settings in the <code>pod-log-reader</code> role, the permission to read the logs of the NGINX pods and, due to the fact that it is running on an EC2 instance with an AWS IAM role <code>eksctl-fluent-bit-demo-nodegroup-ng-2fb6f1a-NodeInstanceRole-P6QXJ5EYS6</code> that has an inline policy attached, allowing it to write the log entries to a Kinesis Data Firehose delivery stream.</p>
+<p>For a finer-grained description of the many moving parts here, have a look at the <a href="terminology/">terminology</a> section, which defines the terms and explains the motivational example in detail.</p>
 <h2 id="use-cases">Use cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h2>
-<p><em>TBD</em></p>
+<p>You want to use <code>rbIAM</code> for:</p>
+<ul>
+<li>Exploring a given permissions setup, for example, an existing deployment in Kubernetes, when using EKS.</li>
+<li>Find the necessary permissions for a desired setup, both for the IAM policies and the RBAC roles.</li>
+<li>Understand how AWS services, such as S3 or CloudWatch or Firehose interact with Kubernetes resources, such as pods, from an access control perspective.</li>
+<li>Look up what a given Kubernetes resource can or can not do, concerning AWS services.</li>
+</ul>
                 
                   
                 
