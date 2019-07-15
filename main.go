@@ -6,6 +6,7 @@ import (
 
 	"github.com/AlecAivazis/survey"
 	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/aws/external"
 	"github.com/aws/aws-sdk-go-v2/service/iam"
 	"github.com/aws/aws-sdk-go-v2/service/sts"
 )
@@ -23,42 +24,25 @@ type Entity struct {
 }
 
 func main() {
-	// cfg, err := external.LoadDefaultAWSConfig()
-	// if err != nil {
-	// 	fmt.Printf("Can't load config: %v", err.Error())
-	// 	os.Exit(1)
-	// }
-	// entity := NewEntity(cfg)
-	// fmt.Println(entity)
-	// the answers will be written to this struct
-	// the questions to ask
-	var qs = []*survey.Question{
-		{
-			Name: "entitysel",
-			Prompt: &survey.Select{
-				Message: "What entity should I use as the starting point?",
-				Options: []string{"myself", "a user", "a service"},
-				Default: "myself",
-			},
-		},
-		{
-			Name:   "entityin",
-			Prompt: &survey.Input{Message: "User or service name?"},
-		},
-	}
-	answers := struct {
-		EntitySelected string `survey:"entitysel"`
-		EntityInput    string `survey:"entityin"`
-	}{}
-
-	// perform the questions
-	err := survey.Ask(qs, &answers)
+	cfg, err := external.LoadDefaultAWSConfig()
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+		fmt.Printf("Can't load config: %v", err.Error())
+		os.Exit(1)
 	}
 
-	fmt.Printf("%v", answers)
+	targetEntity := ""
+	survey.AskOne(&survey.Select{
+		Message: "What entity should I use as the starting point?",
+		Options: []string{"myself", "a user", "a service"},
+		Default: "myself",
+	}, &targetEntity)
+	switch targetEntity {
+	case "myself":
+		entity := NewEntity(cfg)
+		fmt.Println(entity)
+	default:
+		fmt.Println("Not yet implemented, sorry")
+	}
 }
 
 // NewEntity creates a new entity for the currently authenticated AWS user,
