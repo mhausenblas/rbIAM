@@ -29,4 +29,9 @@ For a finer-grained description of the many moving parts here, have a look at th
 
 ## Use cases
 
-*TBD*
+You want to use `rbIAM` for:
+
+- Exploring a given permissions setup, for example, an existing deployment in Kubernetes, when using EKS.
+- Find the necessary permissions for a desired setup, both for the IAM policies and the RBAC roles.
+- Understand how AWS services, such as S3 or CloudWatch or Firehose interact with Kubernetes resources, such as pods, from an access control perspective.
+- Look up what a given Kubernetes resource can or can not do, concerning AWS services.
