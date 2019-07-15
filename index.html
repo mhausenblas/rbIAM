@@ -366,6 +366,8 @@
 <li>depends on an IAM policy, defined in <a href="https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset-policy.json">eks-fluent-bit-daemonset-policy.json</a>, giving it the permissions to write to the Kinesis Data Firehose, manage log streams in CloudWatch, etc., as well as</li>
 <li>a Kubernetes role, defined in <a href="https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset-rbac.yaml">eks-fluent-bit-daemonset-rbac.yaml</a>, giving it the permissions to list and query pods and namespaces, in the cluster, so that it can receive the logs from the containers.</li>
 </ol>
+<p>Taken together, it looks as follows:</p>
+<p><img alt="IAM RBAC example" src="img/iam-rbac-example.png" style="width:600px; display: block; margin: 30px auto 50px auto; padding: 30px 50px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <h2 id="use-cases">Use cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h2>
 <p><em>TBD</em></p>
                 
