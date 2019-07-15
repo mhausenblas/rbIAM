@@ -38,7 +38,7 @@ func main() {
 	}, &targetEntity)
 	switch targetEntity {
 	case "myself":
-		entity := NewEntity(cfg)
+		entity := NewEntity(targetEntity, cfg)
 		fmt.Println(entity)
 	default:
 		fmt.Println("Not yet implemented, sorry")
@@ -48,9 +48,9 @@ func main() {
 // NewEntity creates a new entity for the currently authenticated AWS user,
 // retrieving both the IAM as well as the Kubernetes-related info. If either of
 // the two queries fails, there's no point in continuing, hence we exit early.
-func NewEntity(cfg aws.Config) *Entity {
+func NewEntity(kind string, cfg aws.Config) *Entity {
 	entity := &Entity{
-		Kind: "cli-test",
+		Kind: kind,
 	}
 	err := entity.user(cfg)
 	if err != nil {
