@@ -4,7 +4,7 @@ When using Amazon Elastic Kubernetes Service ([EKS](https://aws.amazon.com/eks/)
 
 `rbIAM` aims to help you navigate this space.
 
-If you want to learn more about the Why then read on and/or check out the [terminology](/terminology), otherwise check out the [getting started](/getting-started) guide now.
+If you want to learn more about the Why then read on and/or check out the [terminology](terminology/), otherwise check out the [getting started](getting-started/) guide now.
 
 ## Motivation 
 
