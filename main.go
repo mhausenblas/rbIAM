@@ -21,6 +21,9 @@ func main() {
 	case "myself":
 		targetrole := selectRole(entity)
 		fmt.Printf("%v", targetrole)
+	case "service account":
+		targetsa := selectSA(entity)
+		fmt.Printf("%v", targetsa)
 	default:
 		fmt.Println("Not yet implemented, sorry")
 	}
@@ -46,5 +49,11 @@ func selectRole(e *Entity) (selection string) {
 		Options: roles,
 		Help:    "Select an IAM role to explore. You can filter by start typing ...",
 	}, &selection)
+	return
+}
+
+func selectSA(e *Entity) (selection string) {
+	// sas := []string{}
+
 	return
 }
