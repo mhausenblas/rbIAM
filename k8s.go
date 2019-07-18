@@ -141,3 +141,20 @@ func (e *Entity) kubeIdentity() error {
 	e.KubeConfig = kconf
 	return nil
 }
+
+// kubeServiceAccounts retrieve the service accounts in the cluster
+func (e *Entity) kubeServiceAccounts() error {
+	res, err := kubecuddler.Kubectl(false, false, "", "get", "sa", "--all-namespaces", "--output", "json")
+	if err != nil {
+		return err
+	}
+	// sr := strings.NewReader(res)
+	// decoder := json.NewDecoder(sr)
+	// kconf := &Config{}
+	// err = decoder.Decode(kconf)
+	// if err != nil {
+	// 	return err
+	// }
+	// e.KubeConfig = kconf
+	return nil
+}
