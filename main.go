@@ -17,7 +17,6 @@ func main() {
 	fmt.Println("Gathering info, this may take a bit ...")
 	entity := NewEntity(cfg)
 	// fmt.Println(entity)
-
 	for {
 		switch selectStartingPoint(entity) {
 		case "IAM role":
@@ -54,7 +53,6 @@ func selectRole(e *Entity) (selection string) {
 		Options: roles,
 		Help:    "Select an IAM role to explore. You can filter by start typing.",
 	}, &selection)
-	fmt.Println(e.Roles[selection])
 	return
 }
 
@@ -68,6 +66,5 @@ func selectSA(e *Entity) (selection string) {
 		Options: sas,
 		Help:    "Select an Kubernetes service account to explore. You can filter by start typing.",
 	}, &selection)
-
 	return
 }

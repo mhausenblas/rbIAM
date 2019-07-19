@@ -41,9 +41,11 @@ func (e *Entity) roles(cfg aws.Config) error {
 	if err != nil {
 		return err
 	}
-	e.Roles = make(map[string]*iam.Role)
+	e.Roles = make(map[string]iam.Role)
 	for _, role := range res.Roles {
-		e.Roles[*role.Arn] = &role
+		rolearn := *role.Arn
+		e.Roles[rolearn] = role
+		// fmt.Printf("arn: %v, role: %v", rolearn, e.Roles[rolearn])
 	}
 	return nil
 }
