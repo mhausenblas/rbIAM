@@ -45,15 +45,23 @@ func selectRole(e *Entity) (selection string) {
 		roles = append(roles, *role.RoleName)
 	}
 	survey.AskOne(&survey.Select{
-		Message: "Which role would you like to use?",
+		Message: "Which IAM role would you like to use?",
 		Options: roles,
-		Help:    "Select an IAM role to explore. You can filter by start typing ...",
+		Help:    "Select an IAM role to explore. You can filter by start typing.",
 	}, &selection)
 	return
 }
 
 func selectSA(e *Entity) (selection string) {
-	// sas := []string{}
-
+	sas := []string{}
+	for saname := range e.ServiceAccounts {
+		sas = append(sas, saname)
+	}
+	survey.AskOne(&survey.Select{
+		Message: "Which Kubernetes service account would you like to use?",
+		Options: sas,
+		Help:    "Select an Kubernetes service account to explore. You can filter by start typing.",
+	}, &selection)
+	fmt.Println(e.ServiceAccounts[selection])
 	return
 }

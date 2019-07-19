@@ -13,11 +13,12 @@ import (
 // or another AWS service with temporary credentials (STS). See also:
 // https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html
 type Entity struct {
-	Caller     *sts.GetCallerIdentityOutput
-	User       *iam.User
-	KubeConfig *Config
-	Roles      []iam.Role
-	Policies   []iam.Policy
+	Caller          *sts.GetCallerIdentityOutput
+	User            *iam.User
+	KubeConfig      *Config
+	Roles           []iam.Role
+	Policies        []iam.Policy
+	ServiceAccounts map[string]ServiceAccount
 }
 
 // NewEntity creates a new entity for the currently authenticated AWS user,
@@ -50,6 +51,11 @@ func NewEntity(cfg aws.Config) *Entity {
 		fmt.Printf("Can't get Kubernetes identity: %v", err.Error())
 		os.Exit(2)
 	}
+	err = entity.kubeServiceAccounts()
+	if err != nil {
+		fmt.Printf("Can't get Kubernetes service accounts: %v", err.Error())
+		os.Exit(2)
+	}
 	return entity
 }
 
@@ -60,11 +66,13 @@ func (e *Entity) String() string {
 			"STS caller identity: %v\n"+
 			"EKS roles: %v\n"+
 			"EKS policies: %v\n"+
-			"Kube context: %+v",
+			"Kube context: %+v\n"+
+			"Kube service accounts: %+v\n",
 		e.User,
 		e.Caller,
 		e.Roles,
 		e.Policies,
 		e.KubeConfig.CurrentContext,
+		e.ServiceAccounts,
 	)
 }
