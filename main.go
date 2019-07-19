@@ -3,11 +3,13 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws/external"
 	"github.com/c-bata/go-prompt"
 )
 
+var Version string
 var entity *Entity
 
 func main() {
@@ -19,8 +21,8 @@ func main() {
 	fmt.Println("Gathering info, this may take a bit ...")
 	entity = NewEntity(cfg)
 	// fmt.Println(entity)
+	cursel := "help"
 	for {
-		cursel := prompt.Input("? ", identities)
 		switch cursel {
 		case "iam-roles":
 			targetrole := prompt.Input("  ↪ ", selectRole)
@@ -33,19 +35,24 @@ func main() {
 				presult(formatSA(&sa))
 			}
 		case "help":
-			fmt.Println("Select one of the supported query commands:")
-			fmt.Println("- iam-roles … to look up an AWS IAM role by ARN")
-			fmt.Println("- k8s-sa … to look up an Kubernetes service account")
-			fmt.Println("\nNote: simply start typing and use tab and cursor keys to select. Also, CTRL+L clears the screen.")
+			presult(fmt.Sprintf("\nThis is rbIAM in version %v\n\n", Version))
+			presult(strings.Repeat("-", 80))
+			presult("\nSelect one of the supported query commands:\n")
+			presult("- iam-roles … to look up an AWS IAM role by ARN\n")
+			presult("- k8s-sa … to look up an Kubernetes service account\n")
+			presult(strings.Repeat("-", 80))
+			presult("\n\nNote: simply start typing and/or use the tab and cursor keys to select.\nCTRL+L clears the screen and if you're stuck type 'help'\n")
 		case "quit":
+			presult("bye!\n")
 			os.Exit(0)
 		default:
-			fmt.Println("Not yet implemented, sorry")
+			presult("Not yet implemented, sorry\n")
 		}
+		cursel = prompt.Input("? ", toplevel)
 	}
 }
 
-func identities(d prompt.Document) []prompt.Suggest {
+func toplevel(d prompt.Document) []prompt.Suggest {
 	s := []prompt.Suggest{
 		{Text: "iam-roles", Description: "Select an AWS IAM role to explore"},
 		{Text: "k8s-sa", Description: "Select an Kubernetes service accounts to explore"},
@@ -71,8 +78,9 @@ func selectSA(d prompt.Document) []prompt.Suggest {
 	return prompt.FilterContains(s, d.GetWordBeforeCursor(), true)
 }
 
-// presult writes msg in light blue to stdout
-// see also https://misc.flogisoft.com/bash/tip_colors_and_formatting
+// presult writes msg in light blue to stdout. you need to take care of
+// newlines yourself, for colors see also:
+// https://misc.flogisoft.com/bash/tip_colors_and_formatting
 func presult(msg string) {
-	_, _ = fmt.Fprintf(os.Stdout, "\x1b[34m%v\x1b[0m\n", msg)
+	_, _ = fmt.Fprintf(os.Stdout, "\x1b[34m%v\x1b[0m", msg)
 }
