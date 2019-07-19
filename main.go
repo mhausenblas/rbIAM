@@ -16,6 +16,7 @@ func main() {
 	}
 	fmt.Println("Gathering info, this may take a bit ...")
 	entity := NewEntity(cfg)
+	// fmt.Println(entity)
 
 	switch selectStartingPoint(entity) {
 	case "myself":

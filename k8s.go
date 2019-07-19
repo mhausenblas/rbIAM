@@ -38,13 +38,29 @@ func (e *Entity) kubeServiceAccounts() error {
 	if err != nil {
 		return err
 	}
-	e.ServiceAccounts = make(map[string]ServiceAccount)
+	e.ServiceAccounts = make(map[string]*ServiceAccount)
 	for _, sa := range sal.Items {
-		e.ServiceAccounts[namespaceit(sa.Namespace, sa.Name)] = sa
+		e.ServiceAccounts[namespaceit(sa.Namespace, sa.Name)] = &sa
 	}
 	return nil
 }
 
 func namespaceit(ns, name string) string {
 	return fmt.Sprintf("%v:%v", ns, name)
+}
+
+// String provides a textual rendering of the service account
+func (sa *ServiceAccount) String() string {
+	var secrets strings.Builder
+	for _, sec := range sa.Secrets {
+		secrets.WriteString(sec.Name + " ")
+	}
+	return fmt.Sprintf(
+		"Namespace: %v\n"+
+			"Name: %v\n"+
+			"Secrets: %v\n",
+		sa.Namespace,
+		sa.Name,
+		secrets.String(),
+	)
 }
