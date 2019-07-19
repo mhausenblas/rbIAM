@@ -25,12 +25,12 @@ func main() {
 		case "iam-roles":
 			targetrole := prompt.Input("  ↪ ", selectRole)
 			if role, ok := entity.Roles[targetrole]; ok {
-				fmt.Println(role)
+				presult(formatRole(&role))
 			}
 		case "k8s-sa":
 			targetsa := prompt.Input("  ↪ ", selectSA)
 			if sa, ok := entity.ServiceAccounts[targetsa]; ok {
-				fmt.Println(sa)
+				presult(formatSA(&sa))
 			}
 		case "help":
 			fmt.Println("Select one of the supported query commands:")
@@ -69,4 +69,10 @@ func selectSA(d prompt.Document) []prompt.Suggest {
 		s = append(s, prompt.Suggest{Text: saname})
 	}
 	return prompt.FilterContains(s, d.GetWordBeforeCursor(), true)
+}
+
+// presult writes msg in light blue to stdout
+// see also https://misc.flogisoft.com/bash/tip_colors_and_formatting
+func presult(msg string) {
+	_, _ = fmt.Fprintf(os.Stdout, "\x1b[34m%v\x1b[0m\n", msg)
 }

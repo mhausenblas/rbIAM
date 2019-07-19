@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/iam"
@@ -45,7 +46,6 @@ func (e *Entity) roles(cfg aws.Config) error {
 	for _, role := range res.Roles {
 		rolearn := *role.Arn
 		e.Roles[rolearn] = role
-		// fmt.Printf("arn: %v, role: %v", rolearn, e.Roles[rolearn])
 	}
 	return nil
 }
@@ -63,4 +63,20 @@ func (e *Entity) policies(cfg aws.Config) error {
 		e.Policies = append(e.Policies, policy)
 	}
 	return nil
+}
+
+// format provides a textual rendering of the role
+func formatRole(role *iam.Role) string {
+	return fmt.Sprintf(
+		"     Name: %v\n"+
+			"     ID: %v\n"+
+			"     Path: %v\n"+
+			"     Maximum session duration: %v\n"+
+			"     Created at: %v\n",
+		*role.RoleName,
+		*role.RoleId,
+		*role.Path,
+		*role.MaxSessionDuration,
+		role.CreateDate,
+	)
 }

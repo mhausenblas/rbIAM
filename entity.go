@@ -18,7 +18,7 @@ type Entity struct {
 	KubeConfig      *Config
 	Roles           map[string]iam.Role
 	Policies        []iam.Policy
-	ServiceAccounts map[string]*ServiceAccount
+	ServiceAccounts map[string]ServiceAccount
 }
 
 // NewEntity creates a new entity for the currently authenticated AWS user,
