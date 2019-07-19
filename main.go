@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/AlecAivazis/survey"
 	"github.com/aws/aws-sdk-go-v2/aws/external"
+	"github.com/c-bata/go-prompt"
 )
+
+var entity *Entity
 
 func main() {
 	cfg, err := external.LoadDefaultAWSConfig()
@@ -15,17 +17,27 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Println("Gathering info, this may take a bit ...")
-	entity := NewEntity(cfg)
+	entity = NewEntity(cfg)
 	// fmt.Println(entity)
 	for {
-		switch selectStartingPoint(entity) {
-		case "IAM role":
-			targetrole := selectRole(entity)
-			fmt.Println(entity.Roles[targetrole])
-		case "Kubernetes service account":
-			targetsa := selectSA(entity)
-			fmt.Println(entity.ServiceAccounts[targetsa])
-		case "exit":
+		cursel := prompt.Input("? ", identities)
+		switch cursel {
+		case "iam-roles":
+			targetrole := prompt.Input("  ↪ ", selectRole)
+			if role, ok := entity.Roles[targetrole]; ok {
+				fmt.Println(role)
+			}
+		case "k8s-sa":
+			targetsa := prompt.Input("  ↪ ", selectSA)
+			if sa, ok := entity.ServiceAccounts[targetsa]; ok {
+				fmt.Println(sa)
+			}
+		case "help":
+			fmt.Println("Select one of the supported query commands:")
+			fmt.Println("- iam-roles … to look up an AWS IAM role by ARN")
+			fmt.Println("- k8s-sa … to look up an Kubernetes service account")
+			fmt.Println("\nNote: simply start typing and use tab and cursor keys to select. Also, CTRL+L clears the screen.")
+		case "quit":
 			os.Exit(0)
 		default:
 			fmt.Println("Not yet implemented, sorry")
@@ -33,38 +45,28 @@ func main() {
 	}
 }
 
-func selectStartingPoint(e *Entity) (selection string) {
-	survey.AskOne(&survey.Select{
-		Message: "What should I use as the starting point?",
-		Options: []string{"IAM role", "Kubernetes service account", "exit"},
-		Default: "IAM role",
-		Help:    "Select from which side to start exploring, either using an IAM role or a Kubernetes service account",
-	}, &selection)
-	return
+func identities(d prompt.Document) []prompt.Suggest {
+	s := []prompt.Suggest{
+		{Text: "iam-roles", Description: "Select an AWS IAM role to explore"},
+		{Text: "k8s-sa", Description: "Select an Kubernetes service accounts to explore"},
+		{Text: "help", Description: "Explain how it works and show available commands"},
+		{Text: "quit", Description: "Terminate the interactive session and quit"},
+	}
+	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
 }
 
-func selectRole(e *Entity) (selection string) {
-	roles := []string{}
-	for rolearn := range e.Roles {
-		roles = append(roles, rolearn)
+func selectRole(d prompt.Document) []prompt.Suggest {
+	s := []prompt.Suggest{}
+	for rolearn := range entity.Roles {
+		s = append(s, prompt.Suggest{Text: rolearn})
 	}
-	survey.AskOne(&survey.Select{
-		Message: "Which IAM role would you like to use?",
-		Options: roles,
-		Help:    "Select an IAM role to explore. You can filter by start typing.",
-	}, &selection)
-	return
+	return prompt.FilterContains(s, d.GetWordBeforeCursor(), true)
 }
 
-func selectSA(e *Entity) (selection string) {
-	sas := []string{}
-	for saname := range e.ServiceAccounts {
-		sas = append(sas, saname)
+func selectSA(d prompt.Document) []prompt.Suggest {
+	s := []prompt.Suggest{}
+	for saname := range entity.ServiceAccounts {
+		s = append(s, prompt.Suggest{Text: saname})
 	}
-	survey.AskOne(&survey.Select{
-		Message: "Which Kubernetes service account would you like to use?",
-		Options: sas,
-		Help:    "Select an Kubernetes service account to explore. You can filter by start typing.",
-	}, &selection)
-	return
+	return prompt.FilterContains(s, d.GetWordBeforeCursor(), true)
 }
