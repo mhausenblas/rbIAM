@@ -18,38 +18,43 @@ func main() {
 	entity := NewEntity(cfg)
 	// fmt.Println(entity)
 
-	switch selectStartingPoint(entity) {
-	case "myself":
-		targetrole := selectRole(entity)
-		fmt.Printf("%v", targetrole)
-	case "service account":
-		targetsa := selectSA(entity)
-		fmt.Printf("%v", targetsa)
-	default:
-		fmt.Println("Not yet implemented, sorry")
+	for {
+		switch selectStartingPoint(entity) {
+		case "IAM role":
+			targetrole := selectRole(entity)
+			fmt.Println(entity.Roles[targetrole])
+		case "Kubernetes service account":
+			targetsa := selectSA(entity)
+			fmt.Println(entity.ServiceAccounts[targetsa])
+		case "exit":
+			os.Exit(0)
+		default:
+			fmt.Println("Not yet implemented, sorry")
+		}
 	}
 }
 
 func selectStartingPoint(e *Entity) (selection string) {
 	survey.AskOne(&survey.Select{
 		Message: "What should I use as the starting point?",
-		Options: []string{"myself", "service account"},
-		Default: "myself",
-		Help:    "Select 'myself' to use your IAM identity or 'service account' to pick a Kubernetes entity",
+		Options: []string{"IAM role", "Kubernetes service account", "exit"},
+		Default: "IAM role",
+		Help:    "Select from which side to start exploring, either using an IAM role or a Kubernetes service account",
 	}, &selection)
 	return
 }
 
 func selectRole(e *Entity) (selection string) {
 	roles := []string{}
-	for _, role := range e.Roles {
-		roles = append(roles, *role.RoleName)
+	for rolearn := range e.Roles {
+		roles = append(roles, rolearn)
 	}
 	survey.AskOne(&survey.Select{
 		Message: "Which IAM role would you like to use?",
 		Options: roles,
 		Help:    "Select an IAM role to explore. You can filter by start typing.",
 	}, &selection)
+	fmt.Println(e.Roles[selection])
 	return
 }
 
@@ -63,6 +68,6 @@ func selectSA(e *Entity) (selection string) {
 		Options: sas,
 		Help:    "Select an Kubernetes service account to explore. You can filter by start typing.",
 	}, &selection)
-	fmt.Println(e.ServiceAccounts[selection])
+
 	return
 }

@@ -16,7 +16,7 @@ type Entity struct {
 	Caller          *sts.GetCallerIdentityOutput
 	User            *iam.User
 	KubeConfig      *Config
-	Roles           []iam.Role
+	Roles           map[string]*iam.Role
 	Policies        []iam.Policy
 	ServiceAccounts map[string]*ServiceAccount
 }

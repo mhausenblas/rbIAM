@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/iam"
@@ -42,11 +41,9 @@ func (e *Entity) roles(cfg aws.Config) error {
 	if err != nil {
 		return err
 	}
+	e.Roles = make(map[string]*iam.Role)
 	for _, role := range res.Roles {
-		if strings.Contains(*role.Arn, "EKS") ||
-			strings.Contains(*role.Arn, "eks") {
-			e.Roles = append(e.Roles, role)
-		}
+		e.Roles[*role.Arn] = &role
 	}
 	return nil
 }
@@ -61,10 +58,7 @@ func (e *Entity) policies(cfg aws.Config) error {
 		return err
 	}
 	for _, policy := range res.Policies {
-		if strings.Contains(*policy.Arn, "EKS") ||
-			strings.Contains(*policy.Arn, "eks") {
-			e.Policies = append(e.Policies, policy)
-		}
+		e.Policies = append(e.Policies, policy)
 	}
 	return nil
 }
