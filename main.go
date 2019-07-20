@@ -16,6 +16,9 @@ var Version string
 // all the pertinent information is gathered from IAM and Kubernetes via NewAccessGraph()
 var ag *AccessGraph
 
+// history keeps the selected items such as roles or service accounts around
+var history []string
+
 func main() {
 	cfg, err := external.LoadDefaultAWSConfig()
 	if err != nil {
@@ -36,25 +39,39 @@ func main() {
 		case "iam-user":
 			presult(formatCaller(ag))
 		case "iam-roles":
-			targetrole := prompt.Input("  ↪ ", selectRole)
+			targetrole := prompt.Input("  ↪ ", selectRole,
+				prompt.OptionMaxSuggestion(30),
+				prompt.OptionSuggestionBGColor(prompt.DarkBlue))
+			appendhist("IAM role", targetrole)
 			if role, ok := ag.Roles[targetrole]; ok {
 				presult(formatRole(&role))
 			}
 		case "iam-policies":
-			targetpolicy := prompt.Input("  ↪ ", selectPolicy)
+			targetpolicy := prompt.Input("  ↪ ", selectPolicy,
+				prompt.OptionMaxSuggestion(30),
+				prompt.OptionSuggestionBGColor(prompt.DarkBlue))
+			appendhist("IAM policy", targetpolicy)
 			if policy, ok := ag.Policies[targetpolicy]; ok {
 				presult(formatPolicy(&policy))
 			}
 		case "k8s-sa":
-			targetsa := prompt.Input("  ↪ ", selectSA)
+			targetsa := prompt.Input("  ↪ ", selectSA,
+				prompt.OptionMaxSuggestion(30),
+				prompt.OptionSuggestionBGColor(prompt.DarkBlue))
+			appendhist("K8s service account", targetsa)
 			if sa, ok := ag.ServiceAccounts[targetsa]; ok {
 				presult(formatSA(&sa))
 			}
 		case "k8s-secrets":
-			targetsec := prompt.Input("  ↪ ", selectSecret)
+			targetsec := prompt.Input("  ↪ ", selectSecret,
+				prompt.OptionMaxSuggestion(30),
+				prompt.OptionSuggestionBGColor(prompt.DarkBlue))
+			appendhist("K8s secret", targetsec)
 			if secret, ok := ag.Secrets[targetsec]; ok {
 				presult(formatSecret(&secret))
 			}
+		case "history":
+			dumphist()
 		case "help":
 			presult(fmt.Sprintf("\nThis is rbIAM in version %v\n\n", Version))
 			presult(strings.Repeat("-", 80))
@@ -64,6 +81,7 @@ func main() {
 			presult("- iam-policies … to look up an AWS IAM policy by ARN\n")
 			presult("- k8s-sa … to look up an Kubernetes service account\n")
 			presult("- k8s-secrets … to look up a Kubernetes secret\n")
+			presult("- history … show history\n")
 			presult("- sync … to refresh the local data\n")
 			presult(strings.Repeat("-", 80))
 			presult("\n\nNote: simply start typing and/or use the tab and cursor keys to select.\n")
@@ -74,7 +92,20 @@ func main() {
 		default:
 			presult("Not yet implemented, sorry\n")
 		}
-		cursel = prompt.Input("? ", toplevel)
+		cursel = prompt.Input("? ", toplevel,
+			prompt.OptionMaxSuggestion(20),
+			prompt.OptionSuggestionBGColor(prompt.DarkBlue),
+			prompt.OptionSelectedDescriptionBGColor(prompt.DarkBlue))
+	}
+}
+
+func appendhist(kind, entry string) {
+	history = append([]string{fmt.Sprintf("[%v] %v", kind, entry)}, history...)
+}
+
+func dumphist() {
+	for _, entry := range history {
+		presult(fmt.Sprintf("%v\n", entry))
 	}
 }
 
