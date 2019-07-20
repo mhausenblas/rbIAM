@@ -3,7 +3,7 @@
 !!! warning
     This tool is heavy WIP and currently the CLI binaries are available only for macOS and Linux platforms. Please [raise an issue on GitHub](https://github.com/mhausenblas/rbIAM/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) if you're experiencing problems or something does not quite work like described in here.
 
-This guide walks you through the set up and usage of `rbIAM`.
+This guide walks you through the setup and usage of `rbIAM`.
 
 ## Prerequisites
 
@@ -33,4 +33,57 @@ chmod +x /usr/local/bin/rbiam
 
 ## Usage
 
-Walkthrough:
+The following list the command you can use and shows walks you through an example usage.
+
+### Commands
+
+The available commands in `rbIAM` are:
+
+#### General
+
+`sync` … synchronizes the local state with IAM and Kubernetes
+
+`help` … lists available commands and provides usage tips
+
+`quit` … terminates the interactive session and quits the program
+
+#### IAM
+
+`iam-user` … allows you to describe the calling AWS IAM user details
+
+`iam-roles` … allows you to select an AWS IAM role to explore and describe its details
+
+`iam-policies` … allows you to select an AWS IAM policy to explore and describe its details
+
+#### Kubernetes
+
+`k8s-sa` … allows you to select an Kubernetes service accounts to explore and describe its details
+
+`k8s-secrets` … allows you to select a Kubernetes secret to explore and describe its details
+
+### Walkthrough
+
+#### Launching & terminating
+
+After you launch the tool you should see something like this:
+
+![startup screen](img/w_startup.png)
+
+When hitting the `TAB` key or → (right arrow key) then the top-level menu appears.
+
+![top-level menu](img/w_toplevelmenu.png)
+
+!!! tip
+    Select any of the commands by navigating with the `TAB`/→ key or by start typing.
+    When you start typing, only commands starting with said prefix are shown. For example,
+    if you type `iam`, then the menu reduces to `iam-user`, `iam-roles` , and `iam-policies`.
+
+Once you're done, you want to terminate `rbIAM`. To do so, start typing `q` and auto-complete 
+it with `TAB` so that the `quit` command appears and when hitting `ENTER` you then execute said 
+command and terminate the program.
+
+#### Querying IAM user info
+
+To learn about the logged in AWS user and caller identity, use the `iam-user`:
+
+![AWS IAM user](img/w_iam_user.png)
