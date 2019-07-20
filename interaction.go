@@ -8,6 +8,7 @@ import (
 func toplevel(d prompt.Document) []prompt.Suggest {
 	s := []prompt.Suggest{
 		{Text: "iam-roles", Description: "Select an AWS IAM role to explore"},
+		{Text: "iam-policies", Description: "Select an AWS IAM policy to explore"},
 		{Text: "k8s-sa", Description: "Select an Kubernetes service accounts to explore"},
 		{Text: "k8s-secrets", Description: "Select a Kubernetes secret to explore"},
 		{Text: "sync", Description: "Synchronize the local state with IAM and Kubernetes"},
@@ -22,6 +23,15 @@ func selectRole(d prompt.Document) []prompt.Suggest {
 	s := []prompt.Suggest{}
 	for rolearn := range ag.Roles {
 		s = append(s, prompt.Suggest{Text: rolearn})
+	}
+	return prompt.FilterContains(s, d.GetWordBeforeCursor(), true)
+}
+
+// selectPolicy allows user to select an IAM policy by ARN.
+func selectPolicy(d prompt.Document) []prompt.Suggest {
+	s := []prompt.Suggest{}
+	for policyarn := range ag.Policies {
+		s = append(s, prompt.Suggest{Text: policyarn})
 	}
 	return prompt.FilterContains(s, d.GetWordBeforeCursor(), true)
 }

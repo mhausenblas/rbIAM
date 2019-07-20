@@ -38,6 +38,11 @@ func main() {
 			if role, ok := ag.Roles[targetrole]; ok {
 				presult(formatRole(&role))
 			}
+		case "iam-policies":
+			targetpolicy := prompt.Input("  ↪ ", selectPolicy)
+			if policy, ok := ag.Policies[targetpolicy]; ok {
+				presult(formatPolicy(&policy))
+			}
 		case "k8s-sa":
 			targetsa := prompt.Input("  ↪ ", selectSA)
 			if sa, ok := ag.ServiceAccounts[targetsa]; ok {
@@ -53,6 +58,7 @@ func main() {
 			presult(strings.Repeat("-", 80))
 			presult("\nSelect one of the supported query commands:\n")
 			presult("- iam-roles … to look up an AWS IAM role by ARN\n")
+			presult("- iam-policies … to look up an AWS IAM policy by ARN\n")
 			presult("- k8s-sa … to look up an Kubernetes service account\n")
 			presult("- k8s-secrets … to look up a Kubernetes secret\n")
 			presult("- sync … to refresh the local data\n")

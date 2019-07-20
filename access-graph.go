@@ -25,7 +25,7 @@ type AccessGraph struct {
 	// Roles is the collection of all IAM roles pertinent to user/caller.
 	Roles map[string]iam.Role
 	// Policies is the collection of all IAM policies pertinent to user/caller.
-	Policies []iam.Policy
+	Policies map[string]iam.Policy
 	// ServiceAccounts is the collection of all service accounts in the
 	// Kubernetes cluster.
 	ServiceAccounts map[string]ServiceAccount

@@ -50,22 +50,7 @@ func (ag *AccessGraph) roles(cfg aws.Config) error {
 	return nil
 }
 
-// policies queries IAM for attached policies, related to EKS.
-// This is done simply by checking if the policy ARN contains EKS or eks.
-func (ag *AccessGraph) policies(cfg aws.Config) error {
-	svc := iam.New(cfg)
-	req := svc.ListPoliciesRequest(&iam.ListPoliciesInput{OnlyAttached: aws.Bool(true)})
-	res, err := req.Send(context.TODO())
-	if err != nil {
-		return err
-	}
-	for _, policy := range res.Policies {
-		ag.Policies = append(ag.Policies, policy)
-	}
-	return nil
-}
-
-// format provides a textual rendering of the role
+// formatRole provides a textual rendering of a role
 func formatRole(role *iam.Role) string {
 	return fmt.Sprintf(
 		"     Name: %v\n"+
@@ -78,5 +63,40 @@ func formatRole(role *iam.Role) string {
 		*role.Path,
 		*role.MaxSessionDuration,
 		role.CreateDate,
+	)
+}
+
+// policies queries IAM for attached policies, related to EKS.
+// This is done simply by checking if the policy ARN contains EKS or eks.
+func (ag *AccessGraph) policies(cfg aws.Config) error {
+	svc := iam.New(cfg)
+	req := svc.ListPoliciesRequest(&iam.ListPoliciesInput{OnlyAttached: aws.Bool(true)})
+	res, err := req.Send(context.TODO())
+	if err != nil {
+		return err
+	}
+	ag.Policies = make(map[string]iam.Policy)
+	for _, policy := range res.Policies {
+		policyarn := *policy.Arn
+		ag.Policies[policyarn] = policy
+	}
+	return nil
+}
+
+// formatRole provides a textual rendering of a policy.
+func formatPolicy(policy *iam.Policy) string {
+	return fmt.Sprintf(
+		"     Name: %v\n"+
+			"     ID: %v\n"+
+			"     Path: %v\n"+
+			"     Number of entities the policy is attached: %v\n"+
+			"     Created at: %v\n"+
+			"     Updated at: %v\n",
+		*policy.PolicyName,
+		*policy.PolicyId,
+		*policy.Path,
+		*policy.AttachmentCount,
+		*policy.CreateDate,
+		*policy.UpdateDate,
 	)
 }
