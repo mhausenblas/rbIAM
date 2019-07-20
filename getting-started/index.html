@@ -609,8 +609,16 @@ entries and then selected one for exploration with <code>ENTER</code>:</p>
 <p>To learn about AWS policies, use the <code>iam-policies</code> command.</p>
 <p><img alt="AWS IAM policies" src="../img/w_iam_policies.png" /></p>
 <h4 id="exploring-kubernetes-service-accounts-secrets">Exploring Kubernetes service accounts &amp; secrets<a class="headerlink" href="#exploring-kubernetes-service-accounts-secrets" title="Permanent link">&para;</a></h4>
-<p><code>k8s-sa</code> allows you to select an Kubernetes service accounts to explore and describe its details</p>
-<p><code>k8s-secrets</code> allows you to select a Kubernetes secret to explore and describe its details</p>
+<p>To explore Kubernetes service accounts and their secrets, use the <code>k8s-sa</code> and 
+the <code>k8s-secrets</code> command, respectively:</p>
+<p><img alt="Kubernetes service accounts &amp; secrets" src="../img/w_k8s_sa_secret.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Values in secrets are <code>base64</code> encoded, however <code>rbIAM</code> automatically converts
+them into clear text so that you can directly copy &amp; paste them. For example,
+in the case shown above, the value of <code>ca.cert</code> would be the actual content of
+the certificate.</p>
+</div>
                 
                   
                 
