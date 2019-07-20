@@ -67,6 +67,10 @@ func NewAccessGraph(cfg aws.Config) *AccessGraph {
 	if err != nil {
 		fmt.Printf("Can't get Kubernetes service accounts: %v", err.Error())
 	}
+	err = ag.kubeSecrets()
+	if err != nil {
+		fmt.Printf("Can't get Kubernetes secrets: %v", err.Error())
+	}
 	return ag
 }
 
@@ -78,12 +82,14 @@ func (ag *AccessGraph) String() string {
 			"EKS roles: %v\n"+
 			"EKS policies: %v\n"+
 			"Kube context: %+v\n"+
-			"Kube service accounts: %+v\n",
+			"Kube service accounts: %+v\n"+
+			"Kube secrets: %+v\n",
 		ag.User,
 		ag.Caller,
 		ag.Roles,
 		ag.Policies,
 		ag.KubeConfig.CurrentContext,
 		ag.ServiceAccounts,
+		ag.Secrets,
 	)
 }

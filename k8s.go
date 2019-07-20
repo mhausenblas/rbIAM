@@ -30,7 +30,7 @@ func (ag *AccessGraph) kubeIdentity() error {
 	return nil
 }
 
-// kubeServiceAccounts retrieve the service accounts in the cluster
+// kubeServiceAccounts retrieve the service accounts in the cluster.
 func (ag *AccessGraph) kubeServiceAccounts() error {
 	res, err := kubecuddler.Kubectl(false, false, "", "get", "sa", "--all-namespaces", "--output", "json")
 	if err != nil {
@@ -50,7 +50,7 @@ func (ag *AccessGraph) kubeServiceAccounts() error {
 	return nil
 }
 
-// format provides a textual rendering of the service account
+// formatSA provides a textual rendering of the service account.
 func formatSA(sa *ServiceAccount) string {
 	var secrets strings.Builder
 	for _, sec := range sa.Secrets {
@@ -66,7 +66,7 @@ func formatSA(sa *ServiceAccount) string {
 	)
 }
 
-// kubeSecrets retrieve the secrets in the cluster
+// kubeSecrets retrieve the secrets in the cluster.
 func (ag *AccessGraph) kubeSecrets() error {
 	res, err := kubecuddler.Kubectl(false, false, "", "get", "secrets", "--all-namespaces", "--output", "json")
 	if err != nil {
@@ -84,4 +84,34 @@ func (ag *AccessGraph) kubeSecrets() error {
 		ag.Secrets[namespaceit(secret.Namespace, secret.Name)] = secret
 	}
 	return nil
+}
+
+// formatSecret provides a textual rendering of the secret.
+func formatSecret(secret *Secret) string {
+	strdatamap := ""
+	// case of string data present:
+	if len(secret.StringData) != 0 {
+		for k, v := range secret.StringData {
+			strdatamap += fmt.Sprintf("%v: %v ", k, v)
+		}
+	}
+	datamap := ""
+	// case of data present:
+	if len(secret.Data) != 0 {
+		for k, v := range secret.Data {
+			datamap += fmt.Sprintf("\n      %v: %v ", k, string(v))
+		}
+	}
+	return fmt.Sprintf(
+		"     Namespace: %v\n"+
+			"     Name: %v\n"+
+			"     Type: %v\n"+
+			"     String data: %v\n"+
+			"     Data: %v\n",
+		secret.Namespace,
+		secret.Name,
+		secret.Type,
+		strdatamap,
+		datamap,
+	)
 }
