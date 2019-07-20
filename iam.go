@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/url"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/iam"
@@ -19,6 +20,28 @@ func (ag *AccessGraph) user(cfg aws.Config) error {
 	}
 	ag.User = res.User
 	return nil
+}
+
+// formatCaller provides a textual rendering of the combined IAM user and caller information.
+func formatCaller(ag *AccessGraph) string {
+	user := ag.User
+	caller := ag.Caller
+	return fmt.Sprintf(
+		"     Account ID: %v\n"+
+			"     User name: %v\n"+
+			"     User ID: %v\n"+
+			"     Caller ID: %v\n"+
+			"     Path: %v\n"+
+			"     Created at: %v\n"+
+			"     Tags: %v\n",
+		*caller.Account,
+		*user.UserName,
+		*user.UserId,
+		*caller.UserId,
+		*user.Path,
+		user.CreateDate,
+		user.Tags,
+	)
 }
 
 // callerIdentity queries STS to retrieve the identity of the caller.
@@ -52,17 +75,26 @@ func (ag *AccessGraph) roles(cfg aws.Config) error {
 
 // formatRole provides a textual rendering of a role
 func formatRole(role *iam.Role) string {
+	arpd := ""
+	u, err := url.QueryUnescape(*role.AssumeRolePolicyDocument)
+	if err == nil {
+		arpd = u
+	}
 	return fmt.Sprintf(
 		"     Name: %v\n"+
 			"     ID: %v\n"+
 			"     Path: %v\n"+
-			"     Maximum session duration: %v\n"+
-			"     Created at: %v\n",
+			"     Assume role by: %v\n"+
+			"     Maximum session duration: %v sec\n"+
+			"     Created at: %v\n"+
+			"     Tags: %v\n",
 		*role.RoleName,
 		*role.RoleId,
 		*role.Path,
+		arpd,
 		*role.MaxSessionDuration,
 		role.CreateDate,
+		role.Tags,
 	)
 }
 
@@ -83,7 +115,7 @@ func (ag *AccessGraph) policies(cfg aws.Config) error {
 	return nil
 }
 
-// formatRole provides a textual rendering of a policy.
+// formatPolicy provides a textual rendering of a policy.
 func formatPolicy(policy *iam.Policy) string {
 	return fmt.Sprintf(
 		"     Name: %v\n"+

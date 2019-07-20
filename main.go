@@ -33,6 +33,8 @@ func main() {
 		case "sync":
 			fmt.Println("Gathering info from IAM and Kubernetes. This may take a bit, please stand by ...")
 			ag = NewAccessGraph(cfg)
+		case "iam-user":
+			presult(formatCaller(ag))
 		case "iam-roles":
 			targetrole := prompt.Input("  ↪ ", selectRole)
 			if role, ok := ag.Roles[targetrole]; ok {
@@ -57,6 +59,7 @@ func main() {
 			presult(fmt.Sprintf("\nThis is rbIAM in version %v\n\n", Version))
 			presult(strings.Repeat("-", 80))
 			presult("\nSelect one of the supported query commands:\n")
+			presult("- iam-user … to look up the calling AWS IAM user\n")
 			presult("- iam-roles … to look up an AWS IAM role by ARN\n")
 			presult("- iam-policies … to look up an AWS IAM policy by ARN\n")
 			presult("- k8s-sa … to look up an Kubernetes service account\n")

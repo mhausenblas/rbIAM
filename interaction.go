@@ -7,6 +7,7 @@ import (
 // toplevel represents the top level choices in the interaction.
 func toplevel(d prompt.Document) []prompt.Suggest {
 	s := []prompt.Suggest{
+		{Text: "iam-user", Description: "Describe calling AWS IAM user"},
 		{Text: "iam-roles", Description: "Select an AWS IAM role to explore"},
 		{Text: "iam-policies", Description: "Select an AWS IAM policy to explore"},
 		{Text: "k8s-sa", Description: "Select an Kubernetes service accounts to explore"},
