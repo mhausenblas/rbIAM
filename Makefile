@@ -1,4 +1,4 @@
-rbiam_version:= v0.1.0
+rbiam_version:= v0.1
 
 .PHONY: build
 
