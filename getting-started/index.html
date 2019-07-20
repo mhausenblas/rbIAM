@@ -283,6 +283,87 @@
     Usage
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#commands" title="Commands" class="md-nav__link">
+    Commands
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" title="General" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iam" title="IAM" class="md-nav__link">
+    IAM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes" title="Kubernetes" class="md-nav__link">
+    Kubernetes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#walkthrough" title="Walkthrough" class="md-nav__link">
+    Walkthrough
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#launching-terminating" title="Launching &amp; terminating" class="md-nav__link">
+    Launching &amp; terminating
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#querying-iam-user-info" title="Querying IAM user info" class="md-nav__link">
+    Querying IAM user info
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploring-iam-roles-policies" title="Exploring IAM roles &amp; policies" class="md-nav__link">
+    Exploring IAM roles &amp; policies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploring-kubernetes-service-accounts-secrets" title="Exploring Kubernetes service accounts &amp; secrets" class="md-nav__link">
+    Exploring Kubernetes service accounts &amp; secrets
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
       
@@ -347,6 +428,87 @@
     Usage
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#commands" title="Commands" class="md-nav__link">
+    Commands
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" title="General" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iam" title="IAM" class="md-nav__link">
+    IAM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes" title="Kubernetes" class="md-nav__link">
+    Kubernetes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#walkthrough" title="Walkthrough" class="md-nav__link">
+    Walkthrough
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#launching-terminating" title="Launching &amp; terminating" class="md-nav__link">
+    Launching &amp; terminating
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#querying-iam-user-info" title="Querying IAM user info" class="md-nav__link">
+    Querying IAM user info
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploring-iam-roles-policies" title="Exploring IAM roles &amp; policies" class="md-nav__link">
+    Exploring IAM roles &amp; policies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploring-kubernetes-service-accounts-secrets" title="Exploring Kubernetes service accounts &amp; secrets" class="md-nav__link">
+    Exploring Kubernetes service accounts &amp; secrets
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
       
@@ -373,7 +535,7 @@
 <p class="admonition-title">Warning</p>
 <p>This tool is heavy WIP and currently the CLI binaries are available only for macOS and Linux platforms. Please <a href="https://github.com/mhausenblas/rbIAM/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">raise an issue on GitHub</a> if you're experiencing problems or something does not quite work like described in here.</p>
 </div>
-<p>This guide walks you through the set up and usage of <code>rbIAM</code>.</p>
+<p>This guide walks you through the setup and usage of <code>rbIAM</code>.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>In order for you to use <code>rbIAM</code>, the following must be true:</p>
 <ul>
@@ -398,7 +560,57 @@ the respective binary (here shown for macOS) like so:</p>
 <p>For Linux install, simply replace the <code>-macos</code> part with <code>-linux</code></p>
 </div>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
-<p>Walkthrough:</p>
+<p>The following list the command you can use and shows walks you through an example usage.</p>
+<h3 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h3>
+<p>The available commands in <code>rbIAM</code> are:</p>
+<h4 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h4>
+<p><code>sync</code> … synchronizes the local state with IAM and Kubernetes</p>
+<p><code>help</code> … lists available commands and provides usage tips</p>
+<p><code>quit</code> … terminates the interactive session and quits the program</p>
+<h4 id="iam">IAM<a class="headerlink" href="#iam" title="Permanent link">&para;</a></h4>
+<p><code>iam-user</code> … allows you to describe the calling AWS IAM user details</p>
+<p><code>iam-roles</code> … allows you to select an AWS IAM role to explore and describe its details</p>
+<p><code>iam-policies</code> … allows you to select an AWS IAM policy to explore and describe its details</p>
+<h4 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h4>
+<p><code>k8s-sa</code> … allows you to select an Kubernetes service accounts to explore and describe its details</p>
+<p><code>k8s-secrets</code> … allows you to select a Kubernetes secret to explore and describe its details</p>
+<h3 id="walkthrough">Walkthrough<a class="headerlink" href="#walkthrough" title="Permanent link">&para;</a></h3>
+<h4 id="launching-terminating">Launching &amp; terminating<a class="headerlink" href="#launching-terminating" title="Permanent link">&para;</a></h4>
+<p>After you launch the tool you should see something like this:</p>
+<p><img alt="startup screen" src="../img/w_startup.png" /></p>
+<p>When hitting the <code>TAB</code> key or → (right arrow key) then the top-level menu appears.</p>
+<p><img alt="top-level menu" src="../img/w_toplevelmenu.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Select any of the commands by navigating with the <code>TAB</code>/→ key or by start typing.
+When you start typing, only commands starting with said prefix are shown. For example,
+if you type <code>iam</code>, then the menu reduces to <code>iam-user</code>, <code>iam-roles</code> , and <code>iam-policies</code>.</p>
+</div>
+<p>Once you're done, you want to terminate <code>rbIAM</code>. To do so, start typing <code>q</code> and auto-complete 
+it with <code>TAB</code> so that the <code>quit</code> command appears and when hitting <code>ENTER</code> you then execute said 
+command and terminate the program.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In order to clear the screen, you can hit <code>CTRL+L</code>.</p>
+</div>
+<h4 id="querying-iam-user-info">Querying IAM user info<a class="headerlink" href="#querying-iam-user-info" title="Permanent link">&para;</a></h4>
+<p>To learn about the logged in AWS user and caller identity, use the <code>iam-user</code>:</p>
+<p><img alt="AWS IAM user" src="../img/w_iam_user.png" /></p>
+<h4 id="exploring-iam-roles-policies">Exploring IAM roles &amp; policies<a class="headerlink" href="#exploring-iam-roles-policies" title="Permanent link">&para;</a></h4>
+<p>If you want to learn about AWS roles, use the <code>iam-roles</code> command. Once selected,
+you will see a list of IAM roles you can select from or start typing to filter
+down the list. For example, here we used <code>eksctl</code> to filter down the list to two
+entries and then selected one for exploration with <code>ENTER</code>:</p>
+<p><img alt="AWS IAM roles" src="../img/w_iam_roles.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In order to clear the term to the left of the cursor, you can hit <code>CTRL+W</code>.</p>
+</div>
+<p>To learn about AWS policies, use the <code>iam-policies</code> command.</p>
+<p><img alt="AWS IAM policies" src="../img/w_iam_policies.png" /></p>
+<h4 id="exploring-kubernetes-service-accounts-secrets">Exploring Kubernetes service accounts &amp; secrets<a class="headerlink" href="#exploring-kubernetes-service-accounts-secrets" title="Permanent link">&para;</a></h4>
+<p><code>k8s-sa</code> allows you to select an Kubernetes service accounts to explore and describe its details</p>
+<p><code>k8s-secrets</code> allows you to select a Kubernetes secret to explore and describe its details</p>
                 
                   
                 
