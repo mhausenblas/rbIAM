@@ -10,7 +10,7 @@ func toplevel(d prompt.Document) []prompt.Suggest {
 		{Text: "iam-user", Description: "Describe calling AWS IAM user"},
 		{Text: "iam-roles", Description: "Select an AWS IAM role to explore"},
 		{Text: "iam-policies", Description: "Select an AWS IAM policy to explore"},
-		{Text: "k8s-sa", Description: "Select an Kubernetes service accounts to explore"},
+		{Text: "k8s-sa", Description: "Select an Kubernetes service account to explore"},
 		{Text: "k8s-secrets", Description: "Select a Kubernetes secret to explore"},
 		{Text: "sync", Description: "Synchronize the local state with IAM and Kubernetes"},
 		{Text: "help", Description: "Explain how it works and show available commands"},

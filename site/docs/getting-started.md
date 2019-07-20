@@ -109,6 +109,13 @@ To learn about AWS policies, use the `iam-policies` command.
 
 #### Exploring Kubernetes service accounts & secrets
 
-`k8s-sa` allows you to select an Kubernetes service accounts to explore and describe its details
+To explore Kubernetes service accounts and their secrets, use the `k8s-sa` and 
+the `k8s-secrets` command, respectively:
 
-`k8s-secrets` allows you to select a Kubernetes secret to explore and describe its details
+![Kubernetes service accounts & secrets](img/w_k8s_sa_secret.png)
+
+!!! note
+    Values in secrets are `base64` encoded, however `rbIAM` automatically converts
+    them into clear text so that you can directly copy & paste them. For example,
+    in the case shown above, the value of `ca.cert` would be the actual content of
+    the certificate.
