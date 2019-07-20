@@ -246,9 +246,52 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Getting Started
+      </label>
+    
     <a href="./" title="Getting Started" class="md-nav__link md-nav__link--active">
       Getting Started
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" title="Prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" title="Install" class="md-nav__link">
+    Install
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" title="Usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -282,6 +325,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" title="Prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" title="Install" class="md-nav__link">
+    Install
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" title="Usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -296,7 +369,36 @@
                 
                 
                 <h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
-<p>TBD. The tool is WIP and here you will find the install and usage guide, soon.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This tool is heavy WIP and currently the CLI binaries are available only for macOS and Linux platforms. Please <a href="https://github.com/mhausenblas/rbIAM/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">raise an issue on GitHub</a> if you're experiencing problems or something does not quite work like described in here.</p>
+</div>
+<p>This guide walks you through the set up and usage of <code>rbIAM</code>.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>In order for you to use <code>rbIAM</code>, the following must be true:</p>
+<ul>
+<li>You have credentials for AWS configured.</li>
+<li>You have access to an EKS cluster or in general an Kubernetes-on-AWS cluster.</li>
+<li>You have <code>kubectl</code> <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">installed</a>.</li>
+</ul>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<p>To install <code>rbIAM</code> execute the following two commands. First, download
+the respective binary (here shown for macOS) like so:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>curl -L https://github.com/mhausenblas/rbIAM/releases/latest/download/rbiam-macos -o /usr/local/bin/rbiam
+</pre></div>
+</td></tr></table>
+
+<p>And then make it executable:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>chmod +x /usr/local/bin/rbiam
+</pre></div>
+</td></tr></table>
+
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For Linux install, simply replace the <code>-macos</code> part with <code>-linux</code></p>
+</div>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<p>Walkthrough:</p>
                 
                   
                 
