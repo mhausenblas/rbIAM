@@ -9,29 +9,35 @@ import (
 	"github.com/c-bata/go-prompt"
 )
 
+// Version is the CLI tool version, provided by the build process, see Makefile
 var Version string
-var entity *Entity
+
+// ag is the global access graph, mostly read-only besides the init phase when
+// all the pertinent information is gathered from IAM and Kubernetes via NewAccessGraph()
+var ag *AccessGraph
 
 func main() {
 	cfg, err := external.LoadDefaultAWSConfig()
 	if err != nil {
-		fmt.Printf("Can't load config: %v", err.Error())
+		fmt.Printf("Can't load AWS config: %v", err.Error())
 		os.Exit(1)
 	}
-	fmt.Println("Gathering info, this may take a bit ...")
-	entity = NewEntity(cfg)
-	// fmt.Println(entity)
-	cursel := "help"
+
+	fmt.Println("Gathering info from IAM and Kubernetes. This may take a bit, please stand by ...")
+	ag = NewAccessGraph(cfg)
+	// fmt.Println(ag)
+
+	cursel := "help" // make sure to first show the help to guide users what to do
 	for {
 		switch cursel {
 		case "iam-roles":
 			targetrole := prompt.Input("  ↪ ", selectRole)
-			if role, ok := entity.Roles[targetrole]; ok {
+			if role, ok := ag.Roles[targetrole]; ok {
 				presult(formatRole(&role))
 			}
 		case "k8s-sa":
 			targetsa := prompt.Input("  ↪ ", selectSA)
-			if sa, ok := entity.ServiceAccounts[targetsa]; ok {
+			if sa, ok := ag.ServiceAccounts[targetsa]; ok {
 				presult(formatSA(&sa))
 			}
 		case "help":
@@ -41,7 +47,8 @@ func main() {
 			presult("- iam-roles … to look up an AWS IAM role by ARN\n")
 			presult("- k8s-sa … to look up an Kubernetes service account\n")
 			presult(strings.Repeat("-", 80))
-			presult("\n\nNote: simply start typing and/or use the tab and cursor keys to select.\nCTRL+L clears the screen and if you're stuck type 'help'\n")
+			presult("\n\nNote: simply start typing and/or use the tab and cursor keys to select.\n")
+			presult("CTRL+L clears the screen and if you're stuck type 'help'.\n\n")
 		case "quit":
 			presult("bye!\n")
 			os.Exit(0)
@@ -52,34 +59,8 @@ func main() {
 	}
 }
 
-func toplevel(d prompt.Document) []prompt.Suggest {
-	s := []prompt.Suggest{
-		{Text: "iam-roles", Description: "Select an AWS IAM role to explore"},
-		{Text: "k8s-sa", Description: "Select an Kubernetes service accounts to explore"},
-		{Text: "help", Description: "Explain how it works and show available commands"},
-		{Text: "quit", Description: "Terminate the interactive session and quit"},
-	}
-	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
-}
-
-func selectRole(d prompt.Document) []prompt.Suggest {
-	s := []prompt.Suggest{}
-	for rolearn := range entity.Roles {
-		s = append(s, prompt.Suggest{Text: rolearn})
-	}
-	return prompt.FilterContains(s, d.GetWordBeforeCursor(), true)
-}
-
-func selectSA(d prompt.Document) []prompt.Suggest {
-	s := []prompt.Suggest{}
-	for saname := range entity.ServiceAccounts {
-		s = append(s, prompt.Suggest{Text: saname})
-	}
-	return prompt.FilterContains(s, d.GetWordBeforeCursor(), true)
-}
-
-// presult writes msg in light blue to stdout. you need to take care of
-// newlines yourself, for colors see also:
+// presult writes msg in  blue to stdout. you need to take care of
+// newlines yourself and for available colors see:
 // https://misc.flogisoft.com/bash/tip_colors_and_formatting
 func presult(msg string) {
 	_, _ = fmt.Fprintf(os.Stdout, "\x1b[34m%v\x1b[0m", msg)

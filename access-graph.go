@@ -9,10 +9,13 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sts"
 )
 
-// Entity represents the caller of a service, could be a human on the CLI
-// or another AWS service with temporary credentials (STS). See also:
+// AccessGraph represents the combined IAM and RBAC access control regime
+// found in Kubernetes on AWS. It includes IAM users, roles and AWS service
+// with temporary credentials (STS) as well as Kubernetes service accounts
+// and users. See also:
 // https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html
-type Entity struct {
+// https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/
+type AccessGraph struct {
 	Caller          *sts.GetCallerIdentityOutput
 	User            *iam.User
 	KubeConfig      *Config
@@ -21,46 +24,44 @@ type Entity struct {
 	ServiceAccounts map[string]ServiceAccount
 }
 
-// NewEntity creates a new entity for the currently authenticated AWS user,
-// retrieving both the IAM as well as the Kubernetes-related info. If either of
-// the two queries fails, there's no point in continuing, hence we exit early.
-func NewEntity(cfg aws.Config) *Entity {
-	entity := &Entity{}
-	err := entity.user(cfg)
+// NewAccessGraph a new access graph for the currently authenticated AWS user,
+// retrieving IAM-related as well as Kubernetes-related info. We try to be graceful
+// here but if the IAM queries fail, there's no point in continuing and we exit early.
+func NewAccessGraph(cfg aws.Config) *AccessGraph {
+	ag := &AccessGraph{}
+	err := ag.user(cfg)
 	if err != nil {
 		fmt.Printf("Can't get user: %v", err.Error())
 		os.Exit(2)
 	}
-	err = entity.callerIdentity(cfg)
+	err = ag.callerIdentity(cfg)
 	if err != nil {
 		fmt.Printf("Can't get caller identity: %v", err.Error())
 		os.Exit(2)
 	}
-	err = entity.roles(cfg)
+	err = ag.roles(cfg)
 	if err != nil {
 		fmt.Printf("Can't get roles: %v", err.Error())
 		os.Exit(2)
 	}
-	err = entity.policies(cfg)
+	err = ag.policies(cfg)
 	if err != nil {
 		fmt.Printf("Can't get policies: %v", err.Error())
 		os.Exit(2)
 	}
-	err = entity.kubeIdentity()
+	err = ag.kubeIdentity()
 	if err != nil {
 		fmt.Printf("Can't get Kubernetes identity: %v", err.Error())
-		os.Exit(2)
 	}
-	err = entity.kubeServiceAccounts()
+	err = ag.kubeServiceAccounts()
 	if err != nil {
 		fmt.Printf("Can't get Kubernetes service accounts: %v", err.Error())
-		os.Exit(2)
 	}
-	return entity
+	return ag
 }
 
-// String provides a textual rendering of the entity
-func (e *Entity) String() string {
+// String provides a textual rendering of the access graph
+func (ag *AccessGraph) String() string {
 	return fmt.Sprintf(
 		"User: %v\n"+
 			"STS caller identity: %v\n"+
@@ -68,11 +69,11 @@ func (e *Entity) String() string {
 			"EKS policies: %v\n"+
 			"Kube context: %+v\n"+
 			"Kube service accounts: %+v\n",
-		e.User,
-		e.Caller,
-		e.Roles,
-		e.Policies,
-		e.KubeConfig.CurrentContext,
-		e.ServiceAccounts,
+		ag.User,
+		ag.Caller,
+		ag.Roles,
+		ag.Policies,
+		ag.KubeConfig.CurrentContext,
+		ag.ServiceAccounts,
 	)
 }

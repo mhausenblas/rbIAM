@@ -9,7 +9,7 @@ import (
 )
 
 // kubeIdentity queries the local Kube config to retrieve the configuration.
-func (e *Entity) kubeIdentity() error {
+func (ag *AccessGraph) kubeIdentity() error {
 	res, err := kubecuddler.Kubectl(false, false, "", "config", "view", "--minify", "--output", "json")
 	if err != nil {
 		return err
@@ -21,12 +21,12 @@ func (e *Entity) kubeIdentity() error {
 	if err != nil {
 		return err
 	}
-	e.KubeConfig = kconf
+	ag.KubeConfig = kconf
 	return nil
 }
 
 // kubeServiceAccounts retrieve the service accounts in the cluster
-func (e *Entity) kubeServiceAccounts() error {
+func (ag *AccessGraph) kubeServiceAccounts() error {
 	res, err := kubecuddler.Kubectl(false, false, "", "get", "sa", "--all-namespaces", "--output", "json")
 	if err != nil {
 		return err
@@ -38,13 +38,14 @@ func (e *Entity) kubeServiceAccounts() error {
 	if err != nil {
 		return err
 	}
-	e.ServiceAccounts = make(map[string]ServiceAccount)
+	ag.ServiceAccounts = make(map[string]ServiceAccount)
 	for _, sa := range sal.Items {
-		e.ServiceAccounts[namespaceit(sa.Namespace, sa.Name)] = sa
+		ag.ServiceAccounts[namespaceit(sa.Namespace, sa.Name)] = sa
 	}
 	return nil
 }
 
+// namespaceit joins Kubernetes namespace and name.
 func namespaceit(ns, name string) string {
 	return fmt.Sprintf("%v:%v", ns, name)
 }
