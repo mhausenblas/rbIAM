@@ -16,17 +16,27 @@ import (
 // https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html
 // https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/
 type AccessGraph struct {
-	Caller          *sts.GetCallerIdentityOutput
-	User            *iam.User
-	KubeConfig      *Config
-	Roles           map[string]iam.Role
-	Policies        []iam.Policy
+	// Caller is the caller of an AWS service (STS).
+	Caller *sts.GetCallerIdentityOutput
+	// User is the AWS user (IAM).
+	User *iam.User
+	// KubeConfig is the Kubernetes client configuration.
+	KubeConfig *Config
+	// Roles is the collection of all IAM roles pertinent to user/caller.
+	Roles map[string]iam.Role
+	// Policies is the collection of all IAM policies pertinent to user/caller.
+	Policies []iam.Policy
+	// ServiceAccounts is the collection of all service accounts in the
+	// Kubernetes cluster.
 	ServiceAccounts map[string]ServiceAccount
+	// Secrets is the collection of all secrets in the Kubernetes cluster.
+	Secrets map[string]Secret
 }
 
 // NewAccessGraph a new access graph for the currently authenticated AWS user,
-// retrieving IAM-related as well as Kubernetes-related info. We try to be graceful
-// here but if the IAM queries fail, there's no point in continuing and we exit early.
+// retrieving IAM-related as well as Kubernetes-related info. We try to be as
+// graceful as possbile here but if the IAM queries fail, there's no point in
+// continuing and we exit early.
 func NewAccessGraph(cfg aws.Config) *AccessGraph {
 	ag := &AccessGraph{}
 	err := ag.user(cfg)

@@ -8,6 +8,11 @@ import (
 	"github.com/mhausenblas/kubecuddler"
 )
 
+// namespaceit joins Kubernetes namespace and name.
+func namespaceit(ns, name string) string {
+	return fmt.Sprintf("%v:%v", ns, name)
+}
+
 // kubeIdentity queries the local Kube config to retrieve the configuration.
 func (ag *AccessGraph) kubeIdentity() error {
 	res, err := kubecuddler.Kubectl(false, false, "", "config", "view", "--minify", "--output", "json")
@@ -45,11 +50,6 @@ func (ag *AccessGraph) kubeServiceAccounts() error {
 	return nil
 }
 
-// namespaceit joins Kubernetes namespace and name.
-func namespaceit(ns, name string) string {
-	return fmt.Sprintf("%v:%v", ns, name)
-}
-
 // format provides a textual rendering of the service account
 func formatSA(sa *ServiceAccount) string {
 	var secrets strings.Builder
@@ -64,4 +64,24 @@ func formatSA(sa *ServiceAccount) string {
 		sa.Name,
 		secrets.String(),
 	)
+}
+
+// kubeSecrets retrieve the secrets in the cluster
+func (ag *AccessGraph) kubeSecrets() error {
+	res, err := kubecuddler.Kubectl(false, false, "", "get", "secrets", "--all-namespaces", "--output", "json")
+	if err != nil {
+		return err
+	}
+	sr := strings.NewReader(res)
+	decoder := json.NewDecoder(sr)
+	secl := SecretList{}
+	err = decoder.Decode(&secl)
+	if err != nil {
+		return err
+	}
+	ag.Secrets = make(map[string]Secret)
+	for _, secret := range secl.Items {
+		ag.Secrets[namespaceit(secret.Namespace, secret.Name)] = secret
+	}
+	return nil
 }

@@ -1,10 +1,7 @@
 package main
 
-// ServiceAccountList is based on List from:
+////////////////////////////////////////////////////////////////////////////////
 // https://github.com/kubernetes/apimachinery/blob/master/pkg/apis/meta/v1/types.go
-type ServiceAccountList struct {
-	Items []ServiceAccount `json:"items"`
-}
 
 // ObjectMeta is metadata that all persisted resources must have.
 type ObjectMeta struct {
@@ -15,16 +12,20 @@ type ObjectMeta struct {
 	ClusterName string            `json:"clusterName,omitempty"`
 }
 
-// ServiceAccount is a lean v.1 based on:
-// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/api/core/v1/types.go
-type ServiceAccount struct {
-	ObjectMeta                   `json:"metadata,omitempty"`
-	Secrets                      []ObjectReference      `json:"secrets,omitempty"`
-	ImagePullSecrets             []LocalObjectReference `json:"imagePullSecrets,omitempty"`
-	AutomountServiceAccountToken *bool                  `json:"automountServiceAccountToken,omitempty"`
+// ServiceAccountList is a list of service accounts.
+type ServiceAccountList struct {
+	Items []ServiceAccount `json:"items"`
 }
 
-// ObjectReference contains enough information to let you inspect or modify the referred object.
+// SecretList is a list of secrets.
+type SecretList struct {
+	Items []Secret `json:"items"`
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/api/core/v1/types.go
+
+// ObjectReference for inspecting the referred object.
 type ObjectReference struct {
 	Kind      string `json:"kind,omitempty"`
 	Namespace string `json:"namespace,omitempty"`
@@ -32,14 +33,35 @@ type ObjectReference struct {
 	FieldPath string `json:"fieldPath,omitempty"`
 }
 
-// LocalObjectReference contains enough information to let you locate the
-// referenced object inside the same namespace.
+// LocalObjectReference for locating the referenced object inside a namespace.
 type LocalObjectReference struct {
 	Name string `json:"name,omitempty"`
 }
 
-// Config is a lean v1.Config based on:
+// ServiceAccount represents a Kubernetes service account.
+type ServiceAccount struct {
+	ObjectMeta                   `json:"metadata,omitempty"`
+	Secrets                      []ObjectReference      `json:"secrets,omitempty"`
+	ImagePullSecrets             []LocalObjectReference `json:"imagePullSecrets,omitempty"`
+	AutomountServiceAccountToken *bool                  `json:"automountServiceAccountToken,omitempty"`
+}
+
+// Secret represents a Kubernetes secrect holding sensitive data.
+type Secret struct {
+	ObjectMeta `json:"metadata,omitempty"`
+	Data       map[string][]byte `json:"data,omitempty" `
+	StringData map[string]string `json:"stringData,omitempty"`
+	Type       SecretType        `json:"type,omitempty"`
+}
+
+// SecretType is a custom data type facilitating programmatic handling of
+// secret data.
+type SecretType string
+
+////////////////////////////////////////////////////////////////////////////////
 // https://github.com/kubernetes/client-go/blob/master/tools/clientcmd/api/v1/types.go
+
+// Config is a lean v1.Config variant, representing a Kubernetes client config.
 type Config struct {
 	// Clusters is a map of referencable names to cluster configs
 	Clusters []NamedCluster `json:"clusters"`
