@@ -73,7 +73,7 @@ When hitting the `TAB` key or → (right arrow key) then the top-level menu appe
 
 ![top-level menu](img/w_toplevelmenu.png)
 
-!!! tip
+!!! note
     Select any of the commands by navigating with the `TAB`/→ key or by start typing.
     When you start typing, only commands starting with said prefix are shown. For example,
     if you type `iam`, then the menu reduces to `iam-user`, `iam-roles` , and `iam-policies`.
@@ -82,8 +82,33 @@ Once you're done, you want to terminate `rbIAM`. To do so, start typing `q` and 
 it with `TAB` so that the `quit` command appears and when hitting `ENTER` you then execute said 
 command and terminate the program.
 
+!!! tip
+    In order to clear the screen, you can hit `CTRL+L`.
+
 #### Querying IAM user info
 
 To learn about the logged in AWS user and caller identity, use the `iam-user`:
 
 ![AWS IAM user](img/w_iam_user.png)
+
+#### Exploring IAM roles & policies
+
+If you want to learn about AWS roles, use the `iam-roles` command. Once selected,
+you will see a list of IAM roles you can select from or start typing to filter
+down the list. For example, here we used `eksctl` to filter down the list to two
+entries and then selected one for exploration with `ENTER`:
+
+![AWS IAM roles](img/w_iam_roles.png)
+
+!!! tip
+    In order to clear the term to the left of the cursor, you can hit `CTRL+W`.
+
+To learn about AWS policies, use the `iam-policies` command.
+
+![AWS IAM policies](img/w_iam_policies.png)
+
+#### Exploring Kubernetes service accounts & secrets
+
+`k8s-sa` allows you to select an Kubernetes service accounts to explore and describe its details
+
+`k8s-secrets` allows you to select a Kubernetes secret to explore and describe its details
