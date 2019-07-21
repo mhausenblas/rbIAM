@@ -107,10 +107,23 @@ To learn about AWS policies, use the `iam-policies` command.
 
 ![AWS IAM policies](img/w_iam_policies.png)
 
+
+#### Exploring Kubernetes pods
+
+Starting off with your app, you want to explore an Kubernetes pod. For this, use
+the `k8s-pods` command as follows:
+
+![Kubernetes pods](img/w_k8s_pods.png)
+
+Now that we have the pod info, we can continue with the service account we found
+here, in this case `fluent-bit`.
+
 #### Exploring Kubernetes service accounts & secrets
 
 To explore Kubernetes service accounts and their secrets, use the `k8s-sa` and 
-the `k8s-secrets` command, respectively:
+the `k8s-secrets` command, respectively. From the previous step we've gathered
+that for the Fluent Bit pod we're interested in the service account `fluent-bit` 
+so let's look this up along with its secret:
 
 ![Kubernetes service accounts & secrets](img/w_k8s_sa_secret.png)
 
