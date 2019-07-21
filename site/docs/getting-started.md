@@ -67,11 +67,11 @@ The available commands in `rbIAM` are:
 
 After you launch the tool you should see something like this:
 
-![startup screen](img/w_startup.png)
+![startup screen](img/w_startup.png){: style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 When hitting the `TAB` key or → (right arrow key) then the top-level menu appears.
 
-![top-level menu](img/w_toplevelmenu.png)
+![top-level menu](img/w_toplevelmenu.png){: style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 !!! note
     Select any of the commands by navigating with the `TAB`/→ key or by start typing.
@@ -89,7 +89,7 @@ command and terminate the program.
 
 To learn about the logged in AWS user and caller identity, use the `iam-user`:
 
-![AWS IAM user](img/w_iam_user.png)
+![AWS IAM user](img/w_iam_user.png){: style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 #### Exploring IAM roles & policies
 
@@ -98,14 +98,14 @@ you will see a list of IAM roles you can select from or start typing to filter
 down the list. For example, here we used `eksctl` to filter down the list to two
 entries and then selected one for exploration with `ENTER`:
 
-![AWS IAM roles](img/w_iam_roles.png)
+![AWS IAM roles](img/w_iam_roles.png){: style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 !!! tip
     In order to clear the term to the left of the cursor, you can hit `CTRL+W`.
 
 To learn about AWS policies, use the `iam-policies` command.
 
-![AWS IAM policies](img/w_iam_policies.png)
+![AWS IAM policies](img/w_iam_policies.png){: style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 
 #### Exploring Kubernetes pods
@@ -113,7 +113,7 @@ To learn about AWS policies, use the `iam-policies` command.
 Starting off with your app, you want to explore an Kubernetes pod. For this, use
 the `k8s-pods` command as follows:
 
-![Kubernetes pods](img/w_k8s_pods.png)
+![Kubernetes pods](img/w_k8s_pods.png){: style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 Now that we have the pod info, we can continue with the service account we found
 here, in this case `fluent-bit`.
@@ -125,7 +125,7 @@ the `k8s-secrets` command, respectively. From the previous step we've gathered
 that for the Fluent Bit pod we're interested in the service account `fluent-bit` 
 so let's look this up along with its secret:
 
-![Kubernetes service accounts & secrets](img/w_k8s_sa_secret.png)
+![Kubernetes service accounts & secrets](img/w_k8s_sa_secret.png){: style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 !!! note
     Values in secrets are `base64` encoded, however `rbIAM` automatically converts

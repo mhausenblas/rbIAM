@@ -12,7 +12,7 @@ Let's have a look at a concrete example, for motivation. Take the [Fluent Bit ou
 
 The setup, on a high level, is as follows:
 
-![Container log shipping with Fluent Bit on EKS](img/cclfb.png){: style="width:600px; display: block; margin: 30px auto 50px auto; padding: 30px 50px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
+![Container log shipping with Fluent Bit on EKS](img/cclfb.png){: style="width:95%; display: block; margin: 30px auto 50px auto; padding: 20px 50px 20px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 The Fluent Bit is deployed as a `DaemonSet` as per [eks-fluent-bit-daemonset.yaml](https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset.yaml) and:
 
@@ -21,7 +21,7 @@ The Fluent Bit is deployed as a `DaemonSet` as per [eks-fluent-bit-daemonset.yam
 
 Taken together, it looks as follows:
 
-![IAM RBAC example](img/iam-rbac-example.png){: style="width:600px; display: block; margin: 30px auto 50px auto; padding: 30px 50px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
+![IAM RBAC example](img/iam-rbac-example.png){: style="width:95%; display: block; margin: 30px auto 50px auto; padding: 20px 50px 20px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 The Fluent Bit plugin has, through the Kubernetes RBAC settings in the `pod-log-reader` role, the permission to read the logs of the NGINX pods and, due to the fact that it is running on an EC2 instance with an AWS IAM role `eksctl-fluent-bit-demo-nodegroup-ng-2fb6f1a-NodeInstanceRole-P6QXJ5EYS6` that has an inline policy attached, allowing it to write the log entries to a Kinesis Data Firehose delivery stream.
 
@@ -35,3 +35,8 @@ You want to use `rbIAM` for:
 - Find the necessary permissions for a desired setup, both for the IAM policies and the RBAC roles.
 - Understand how AWS services, such as S3 or CloudWatch or Firehose interact with Kubernetes resources, such as pods, from an access control perspective.
 - Look up what a given Kubernetes resource can or can not do, concerning AWS services.
+
+We expect that infra admins admins, devops roles, and also developers can 
+benefit from `rbIAM`. In order to use the tool, we assume you're familiar with 
+both AWS IAM and Kubernetes RBAC. If you want to brush up your knowledge, we
+recommend first having a look at the [terminology](terminology/) section.

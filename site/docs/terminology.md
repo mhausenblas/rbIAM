@@ -6,7 +6,7 @@ In the following we define the terms used in AWS IAM and Kubernetes RBAC, along 
 
 Conceptually, AWS IAM looks as follows: the **access** an identity—such as a user or role—has concerning an AWS service or resource is determined through the attached policies that list allowed actions on resources. 
 
-![AWS IAM concept](img/iam-concept.png){: style="width:400px; display: block; margin: 30px auto 50px auto; padding: 30px 50px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
+![AWS IAM concept](img/iam-concept.png){: style="width:95%; display: block; margin: 30px auto 50px auto; padding: 20px 50px 20px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 More formally, we're using the following terms:
 
@@ -30,7 +30,7 @@ Policy
 
 For example, for our Fluent Bit output plugin deployed as a `DaemonSet` in EKS, one of the IAM regimes looks as follows (compare: [IAM policy used](https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/6bf267b5c750de7df94a0553f0dde9e5c1e4d75a/eks/eks-fluent-bit-daemonset-policy.json#L5)):
 
-![AWS IAM example](img/iam-example.png){: style="width:400px; display: block; margin: 30px auto 50px auto; padding: 30px 50px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
+![AWS IAM example](img/iam-example.png){: style="width:95%; display: block; margin: 30px auto 50px auto; padding: 20px 50px 20px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 In a nutshell: the Fluent Bit output plugin, running in a container part of a pod that is running on an EC2 instance part of a node group with a role `eksctl-fluent-bit-demo-nodegroup-ng-2fb6f1a-NodeInstanceRole-P6QXJ5EYS6` is permitted to perform the `PutRecordBatch` action in Firehose; in fact, with said policy, the Fluent Bit plugin is allowed to put records into *any* delivery stream, since the resource has not been limited to a specific one.
 
@@ -39,7 +39,7 @@ In a nutshell: the Fluent Bit output plugin, running in a container part of a po
 
 Conceptually, Kubernetes RBAC looks as follows: the **access** an entity—such as a user or service account—has concerning a Kubernetes resource is determined through two indirections: roles (which define access rules) and role bindings (attaching or binding a role to an entity). 
 
-![Kubernetes RBAC concept](img/rbac-concept.png){: style="width:400px; display: block; margin: 30px auto 50px auto; padding: 30px 50px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
+![Kubernetes RBAC concept](img/rbac-concept.png){: style="width:95%; display: block; margin: 30px auto 50px auto; padding: 20px 50px 20px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 More formally, we're using the following terms:
 
@@ -77,6 +77,6 @@ Role binding
 
 For example, for our Fluent Bit output plugin deployed as a `DaemonSet` in EKS, the RBAC regime looks as follows (compare: [role & role binding used](https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset-rbac.yaml)):
 
-![Kubernetes RBAC example](img/rbac-example.png){: style="width:430px; display: block; margin: 30px auto 50px auto; padding: 30px 60px 10px 50px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
+![Kubernetes RBAC example](img/rbac-example.png){: style="width:95%; display: block; margin: 30px auto 50px auto; padding: 20px 60px 20px 40px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
 
 In a nutshell: the Fluent Bit output plugin, using the `default:fluent-bit` service account, is permitted to read and list pods in the default namespace.
