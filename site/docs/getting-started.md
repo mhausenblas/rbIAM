@@ -57,6 +57,8 @@ The available commands in `rbIAM` are:
 
 #### Kubernetes
 
+`k8s-pods` … allows you to select a Kubernetes pod to explore and describe its details
+
 `k8s-sa` … allows you to select an Kubernetes service accounts to explore and describe its details
 
 `k8s-secrets` … allows you to select a Kubernetes secret to explore and describe its details
