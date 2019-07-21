@@ -591,9 +591,9 @@ the respective binary (here shown for macOS) like so:</p>
 <h3 id="walkthrough">Walkthrough<a class="headerlink" href="#walkthrough" title="Permanent link">&para;</a></h3>
 <h4 id="launching-terminating">Launching &amp; terminating<a class="headerlink" href="#launching-terminating" title="Permanent link">&para;</a></h4>
 <p>After you launch the tool you should see something like this:</p>
-<p><img alt="startup screen" src="../img/w_startup.png" /></p>
+<p><img alt="startup screen" src="../img/w_startup.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <p>When hitting the <code>TAB</code> key or → (right arrow key) then the top-level menu appears.</p>
-<p><img alt="top-level menu" src="../img/w_toplevelmenu.png" /></p>
+<p><img alt="top-level menu" src="../img/w_toplevelmenu.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Select any of the commands by navigating with the <code>TAB</code>/→ key or by start typing.
@@ -609,23 +609,23 @@ command and terminate the program.</p>
 </div>
 <h4 id="querying-iam-user-info">Querying IAM user info<a class="headerlink" href="#querying-iam-user-info" title="Permanent link">&para;</a></h4>
 <p>To learn about the logged in AWS user and caller identity, use the <code>iam-user</code>:</p>
-<p><img alt="AWS IAM user" src="../img/w_iam_user.png" /></p>
+<p><img alt="AWS IAM user" src="../img/w_iam_user.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <h4 id="exploring-iam-roles-policies">Exploring IAM roles &amp; policies<a class="headerlink" href="#exploring-iam-roles-policies" title="Permanent link">&para;</a></h4>
 <p>If you want to learn about AWS roles, use the <code>iam-roles</code> command. Once selected,
 you will see a list of IAM roles you can select from or start typing to filter
 down the list. For example, here we used <code>eksctl</code> to filter down the list to two
 entries and then selected one for exploration with <code>ENTER</code>:</p>
-<p><img alt="AWS IAM roles" src="../img/w_iam_roles.png" /></p>
+<p><img alt="AWS IAM roles" src="../img/w_iam_roles.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>In order to clear the term to the left of the cursor, you can hit <code>CTRL+W</code>.</p>
 </div>
 <p>To learn about AWS policies, use the <code>iam-policies</code> command.</p>
-<p><img alt="AWS IAM policies" src="../img/w_iam_policies.png" /></p>
+<p><img alt="AWS IAM policies" src="../img/w_iam_policies.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <h4 id="exploring-kubernetes-pods">Exploring Kubernetes pods<a class="headerlink" href="#exploring-kubernetes-pods" title="Permanent link">&para;</a></h4>
 <p>Starting off with your app, you want to explore an Kubernetes pod. For this, use
 the <code>k8s-pods</code> command as follows:</p>
-<p><img alt="Kubernetes pods" src="../img/w_k8s_pods.png" /></p>
+<p><img alt="Kubernetes pods" src="../img/w_k8s_pods.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <p>Now that we have the pod info, we can continue with the service account we found
 here, in this case <code>fluent-bit</code>.</p>
 <h4 id="exploring-kubernetes-service-accounts-secrets">Exploring Kubernetes service accounts &amp; secrets<a class="headerlink" href="#exploring-kubernetes-service-accounts-secrets" title="Permanent link">&para;</a></h4>
@@ -633,7 +633,7 @@ here, in this case <code>fluent-bit</code>.</p>
 the <code>k8s-secrets</code> command, respectively. From the previous step we've gathered
 that for the Fluent Bit pod we're interested in the service account <code>fluent-bit</code> 
 so let's look this up along with its secret:</p>
-<p><img alt="Kubernetes service accounts &amp; secrets" src="../img/w_k8s_sa_secret.png" /></p>
+<p><img alt="Kubernetes service accounts &amp; secrets" src="../img/w_k8s_sa_secret.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Values in secrets are <code>base64</code> encoded, however <code>rbIAM</code> automatically converts
