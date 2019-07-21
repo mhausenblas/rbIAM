@@ -70,6 +70,14 @@ func main() {
 			if secret, ok := ag.Secrets[targetsec]; ok {
 				presult(formatSecret(&secret))
 			}
+		case "k8s-pods":
+			targetpod := prompt.Input("  ↪ ", selectPod,
+				prompt.OptionMaxSuggestion(30),
+				prompt.OptionSuggestionBGColor(prompt.DarkBlue))
+			appendhist("K8s pod", targetpod)
+			if pod, ok := ag.Pods[targetpod]; ok {
+				presult(formatPod(&pod))
+			}
 		case "history":
 			dumphist()
 		case "help":
@@ -81,6 +89,7 @@ func main() {
 			presult("- iam-policies … to look up an AWS IAM policy by ARN\n")
 			presult("- k8s-sa … to look up an Kubernetes service account\n")
 			presult("- k8s-secrets … to look up a Kubernetes secret\n")
+			presult("- k8s-pods … to look up a Kubernetes pod\n")
 			presult("- history … show history\n")
 			presult("- sync … to refresh the local data\n")
 			presult(strings.Repeat("-", 80))

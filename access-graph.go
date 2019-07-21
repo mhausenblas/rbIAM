@@ -31,6 +31,8 @@ type AccessGraph struct {
 	ServiceAccounts map[string]ServiceAccount
 	// Secrets is the collection of all secrets in the Kubernetes cluster.
 	Secrets map[string]Secret
+	// Pods is the collection of all pods in the Kubernetes cluster.
+	Pods map[string]Pod
 }
 
 // NewAccessGraph a new access graph for the currently authenticated AWS user,
@@ -71,6 +73,10 @@ func NewAccessGraph(cfg aws.Config) *AccessGraph {
 	if err != nil {
 		fmt.Printf("Can't get Kubernetes secrets: %v", err.Error())
 	}
+	err = ag.kubePods()
+	if err != nil {
+		fmt.Printf("Can't get Kubernetes pods: %v", err.Error())
+	}
 	return ag
 }
 
@@ -83,7 +89,8 @@ func (ag *AccessGraph) String() string {
 			"EKS policies: %v\n"+
 			"Kube context: %+v\n"+
 			"Kube service accounts: %+v\n"+
-			"Kube secrets: %+v\n",
+			"Kube secrets: %+v\n"+
+			"Kube pods: %+v\n",
 		ag.User,
 		ag.Caller,
 		ag.Roles,
@@ -91,5 +98,6 @@ func (ag *AccessGraph) String() string {
 		ag.KubeConfig.CurrentContext,
 		ag.ServiceAccounts,
 		ag.Secrets,
+		ag.Pods,
 	)
 }

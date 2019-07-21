@@ -12,6 +12,7 @@ func toplevel(d prompt.Document) []prompt.Suggest {
 		{Text: "iam-policies", Description: "Select an AWS IAM policy to explore"},
 		{Text: "k8s-sa", Description: "Select an Kubernetes service account to explore"},
 		{Text: "k8s-secrets", Description: "Select a Kubernetes secret to explore"},
+		{Text: "k8s-pods", Description: "Select a Kubernetes pod to explore"},
 		{Text: "history", Description: "Show the history of selected items"},
 		{Text: "sync", Description: "Synchronize the local state with IAM and Kubernetes"},
 		{Text: "help", Description: "Explain how it works and show available commands"},
@@ -52,6 +53,15 @@ func selectSecret(d prompt.Document) []prompt.Suggest {
 	s := []prompt.Suggest{}
 	for secname := range ag.Secrets {
 		s = append(s, prompt.Suggest{Text: secname})
+	}
+	return prompt.FilterContains(s, d.GetWordBeforeCursor(), true)
+}
+
+// selectPod allows user to select a Kubernetes pod.
+func selectPod(d prompt.Document) []prompt.Suggest {
+	s := []prompt.Suggest{}
+	for podname := range ag.Pods {
+		s = append(s, prompt.Suggest{Text: podname})
 	}
 	return prompt.FilterContains(s, d.GetWordBeforeCursor(), true)
 }

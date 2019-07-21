@@ -22,6 +22,11 @@ type SecretList struct {
 	Items []Secret `json:"items"`
 }
 
+// PodList is a list of pods.
+type PodList struct {
+	Items []Pod `json:"items"`
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/api/core/v1/types.go
 
@@ -57,6 +62,72 @@ type Secret struct {
 // SecretType is a custom data type facilitating programmatic handling of
 // secret data.
 type SecretType string
+
+// Pod is a collection of containers that can run on a host.
+type Pod struct {
+	ObjectMeta `json:"metadata,omitempty"`
+	Spec       PodSpec   `json:"spec,omitempty"`
+	Status     PodStatus `json:"status,omitempty"`
+}
+
+// PodSpec is a description of a pod.
+type PodSpec struct {
+	Volumes            []Volume               `json:"volumes,omitempty"`
+	InitContainers     []Container            `json:"initContainers,omitempty"`
+	Containers         []Container            `json:"containers"`
+	ServiceAccountName string                 `json:"serviceAccountName,omitempty"`
+	ImagePullSecrets   []LocalObjectReference `json:"imagePullSecrets,omitempty"`
+}
+
+// Volume represents a named volume in a pod.
+type Volume struct {
+	Name string `json:"name"`
+}
+
+// Container is an application container running within a pod.
+type Container struct {
+	Name            string     `json:"name"`
+	Image           string     `json:"image,omitempty"`
+	Command         []string   `json:"command,omitempty"`
+	Args            []string   `json:"args,omitempty"`
+	Env             []EnvVar   `json:"env,omitempty"`
+	ImagePullPolicy PullPolicy `json:"imagePullPolicy,omitempty"`
+}
+
+// EnvVar represents an environment variable present in a Container.
+type EnvVar struct {
+	Name  string `json:"name" protobuf:"bytes,1,opt,name=name"`
+	Value string `json:"value,omitempty" protobuf:"bytes,2,opt,name=value"`
+}
+
+// PullPolicy describes a policy for if/when to pull a container image.
+type PullPolicy string
+
+// PodStatus represents information about the status of a pod.
+type PodStatus struct {
+	Phase             PodPhase       `json:"phase,omitempty"`
+	Conditions        []PodCondition `json:"conditions,omitempty"`
+	Message           string         `json:"message,omitempty"`
+	NominatedNodeName string         `json:"nominatedNodeName,omitempty"`
+	HostIP            string         `json:"hostIP,omitempty" protobuf:"bytes,5,opt,name=hostIP"`
+	PodIP             string         `json:"podIP,omitempty" protobuf:"bytes,6,opt,name=podIP"`
+}
+
+// PodPhase is a label for the condition of a pod at the current time.
+type PodPhase string
+
+// PodCondition contains details for the current condition of this pod.
+type PodCondition struct {
+	Type   PodConditionType `json:"type"`
+	Status ConditionStatus  `json:"status"`
+	Reason string           `json:"reason,omitempty"`
+}
+
+// PodConditionType is a valid value for PodCondition.Type
+type PodConditionType string
+
+// ConditionStatus provides the status.
+type ConditionStatus string
 
 ////////////////////////////////////////////////////////////////////////////////
 // https://github.com/kubernetes/client-go/blob/master/tools/clientcmd/api/v1/types.go
