@@ -42,41 +42,41 @@ func main() {
 			targetrole := prompt.Input("  ↪ ", selectRole,
 				prompt.OptionMaxSuggestion(30),
 				prompt.OptionSuggestionBGColor(prompt.DarkBlue))
-			appendhist("IAM role", targetrole)
 			if role, ok := ag.Roles[targetrole]; ok {
 				presult(formatRole(&role))
+				appendhist("IAM role", targetrole)
 			}
 		case "iam-policies":
 			targetpolicy := prompt.Input("  ↪ ", selectPolicy,
 				prompt.OptionMaxSuggestion(30),
 				prompt.OptionSuggestionBGColor(prompt.DarkBlue))
-			appendhist("IAM policy", targetpolicy)
 			if policy, ok := ag.Policies[targetpolicy]; ok {
 				presult(formatPolicy(&policy))
+				appendhist("IAM policy", targetpolicy)
 			}
 		case "k8s-sa":
 			targetsa := prompt.Input("  ↪ ", selectSA,
 				prompt.OptionMaxSuggestion(30),
 				prompt.OptionSuggestionBGColor(prompt.DarkBlue))
-			appendhist("K8s service account", targetsa)
 			if sa, ok := ag.ServiceAccounts[targetsa]; ok {
 				presult(formatSA(&sa))
+				appendhist("Kubernetes service account", targetsa)
 			}
 		case "k8s-secrets":
 			targetsec := prompt.Input("  ↪ ", selectSecret,
 				prompt.OptionMaxSuggestion(30),
 				prompt.OptionSuggestionBGColor(prompt.DarkBlue))
-			appendhist("K8s secret", targetsec)
 			if secret, ok := ag.Secrets[targetsec]; ok {
 				presult(formatSecret(&secret))
+				appendhist("Kubernetes secret", targetsec)
 			}
 		case "k8s-pods":
 			targetpod := prompt.Input("  ↪ ", selectPod,
 				prompt.OptionMaxSuggestion(30),
 				prompt.OptionSuggestionBGColor(prompt.DarkBlue))
-			appendhist("K8s pod", targetpod)
 			if pod, ok := ag.Pods[targetpod]; ok {
 				presult(formatPod(&pod))
+				appendhist("Kubernetes pod", targetpod)
 			}
 		case "history":
 			dumphist()
