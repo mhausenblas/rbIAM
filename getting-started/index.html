@@ -350,6 +350,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#exploring-kubernetes-pods" title="Exploring Kubernetes pods" class="md-nav__link">
+    Exploring Kubernetes pods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#exploring-kubernetes-service-accounts-secrets" title="Exploring Kubernetes service accounts &amp; secrets" class="md-nav__link">
     Exploring Kubernetes service accounts &amp; secrets
   </a>
@@ -495,6 +502,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#exploring-kubernetes-pods" title="Exploring Kubernetes pods" class="md-nav__link">
+    Exploring Kubernetes pods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#exploring-kubernetes-service-accounts-secrets" title="Exploring Kubernetes service accounts &amp; secrets" class="md-nav__link">
     Exploring Kubernetes service accounts &amp; secrets
   </a>
@@ -608,9 +622,17 @@ entries and then selected one for exploration with <code>ENTER</code>:</p>
 </div>
 <p>To learn about AWS policies, use the <code>iam-policies</code> command.</p>
 <p><img alt="AWS IAM policies" src="../img/w_iam_policies.png" /></p>
+<h4 id="exploring-kubernetes-pods">Exploring Kubernetes pods<a class="headerlink" href="#exploring-kubernetes-pods" title="Permanent link">&para;</a></h4>
+<p>Starting off with your app, you want to explore an Kubernetes pod. For this, use
+the <code>k8s-pods</code> command as follows:</p>
+<p><img alt="Kubernetes pods" src="../img/w_k8s_pods.png" /></p>
+<p>Now that we have the pod info, we can continue with the service account we found
+here, in this case <code>fluent-bit</code>.</p>
 <h4 id="exploring-kubernetes-service-accounts-secrets">Exploring Kubernetes service accounts &amp; secrets<a class="headerlink" href="#exploring-kubernetes-service-accounts-secrets" title="Permanent link">&para;</a></h4>
 <p>To explore Kubernetes service accounts and their secrets, use the <code>k8s-sa</code> and 
-the <code>k8s-secrets</code> command, respectively:</p>
+the <code>k8s-secrets</code> command, respectively. From the previous step we've gathered
+that for the Fluent Bit pod we're interested in the service account <code>fluent-bit</code> 
+so let's look this up along with its secret:</p>
 <p><img alt="Kubernetes service accounts &amp; secrets" src="../img/w_k8s_sa_secret.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
