@@ -1,6 +1,6 @@
 # Terminology
 
-In the following we define the terms used in AWS IAM and Kubernetes RBAC, along with the [motivational example](../#motivation), to illustrate what exactly each term means.
+In the following we define the terms used in AWS IAM and Kubernetes RBAC using the [motivational example](../#motivation) to illustrate what each term means.
 
 ## AWS Identity and Access Management (IAM) { #markdown data-toc-label='IAM terms' }
 
