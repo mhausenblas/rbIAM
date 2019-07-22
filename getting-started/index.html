@@ -291,33 +291,6 @@
     Commands
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#general" title="General" class="md-nav__link">
-    General
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iam" title="IAM" class="md-nav__link">
-    IAM
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#kubernetes" title="Kubernetes" class="md-nav__link">
-    Kubernetes
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -336,29 +309,29 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#querying-iam-user-info" title="Querying IAM user info" class="md-nav__link">
-    Querying IAM user info
+  <a href="#markdown" title="IAM user info" class="md-nav__link">
+    IAM user info
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#exploring-iam-roles-policies" title="Exploring IAM roles &amp; policies" class="md-nav__link">
-    Exploring IAM roles &amp; policies
+  <a href="#markdown" title="IAM roles &amp;policies" class="md-nav__link">
+    IAM roles &amp;policies
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#exploring-kubernetes-pods" title="Exploring Kubernetes pods" class="md-nav__link">
-    Exploring Kubernetes pods
+  <a href="#markdown" title="Kubernetes pods" class="md-nav__link">
+    Kubernetes pods
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#exploring-kubernetes-service-accounts-secrets" title="Exploring Kubernetes service accounts &amp; secrets" class="md-nav__link">
-    Exploring Kubernetes service accounts &amp; secrets
+  <a href="#markdown" title="Kubernetes service accounts" class="md-nav__link">
+    Kubernetes service accounts
   </a>
   
 </li>
@@ -443,33 +416,6 @@
     Commands
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#general" title="General" class="md-nav__link">
-    General
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iam" title="IAM" class="md-nav__link">
-    IAM
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#kubernetes" title="Kubernetes" class="md-nav__link">
-    Kubernetes
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -488,29 +434,29 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#querying-iam-user-info" title="Querying IAM user info" class="md-nav__link">
-    Querying IAM user info
+  <a href="#markdown" title="IAM user info" class="md-nav__link">
+    IAM user info
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#exploring-iam-roles-policies" title="Exploring IAM roles &amp; policies" class="md-nav__link">
-    Exploring IAM roles &amp; policies
+  <a href="#markdown" title="IAM roles &amp;policies" class="md-nav__link">
+    IAM roles &amp;policies
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#exploring-kubernetes-pods" title="Exploring Kubernetes pods" class="md-nav__link">
-    Exploring Kubernetes pods
+  <a href="#markdown" title="Kubernetes pods" class="md-nav__link">
+    Kubernetes pods
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#exploring-kubernetes-service-accounts-secrets" title="Exploring Kubernetes service accounts &amp; secrets" class="md-nav__link">
-    Exploring Kubernetes service accounts &amp; secrets
+  <a href="#markdown" title="Kubernetes service accounts" class="md-nav__link">
+    Kubernetes service accounts
   </a>
   
 </li>
@@ -545,10 +491,6 @@
                 
                 
                 <h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This tool is heavy WIP and currently the CLI binaries are available only for macOS and Linux platforms. Please <a href="https://github.com/mhausenblas/rbIAM/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">raise an issue on GitHub</a> if you're experiencing problems or something does not quite work like described in here.</p>
-</div>
 <p>This guide walks you through the setup and usage of <code>rbIAM</code>.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>In order for you to use <code>rbIAM</code>, the following must be true:</p>
@@ -558,7 +500,11 @@
 <li>You have <code>kubectl</code> <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">installed</a>.</li>
 </ul>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
-<p>To install <code>rbIAM</code> execute the following two commands. First, download
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This tool is still WIP and currently the CLI binaries are available only for macOS and Linux platforms. Please <a href="https://github.com/mhausenblas/rbIAM/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">raise an issue on GitHub</a> if you're experiencing problems or something does not quite work like described in here.</p>
+</div>
+<p>To install <code>rbIAM</code>, execute the following two commands. First, download
 the respective binary (here shown for macOS) like so:</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>curl -L https://github.com/mhausenblas/rbIAM/releases/latest/download/rbiam-macos -o /usr/local/bin/rbiam
 </pre></div>
@@ -573,27 +519,43 @@ the respective binary (here shown for macOS) like so:</p>
 <p class="admonition-title">Tip</p>
 <p>For Linux install, simply replace the <code>-macos</code> part with <code>-linux</code></p>
 </div>
+<p>Alternatively, you can download the binaries from the <a href="https://github.com/mhausenblas/rbIAM/releases">releases</a> page on GitHub.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
-<p>The following list the command you can use and shows walks you through an example usage.</p>
+<p>The following lists the commands <code>rbIAM</code> supports and then walks you through an example usage, end-to-end.</p>
 <h3 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h3>
-<p>The available commands in <code>rbIAM</code> are:</p>
-<h4 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h4>
-<p><code>sync</code> … synchronizes the local state with IAM and Kubernetes</p>
-<p><code>help</code> … lists available commands and provides usage tips</p>
-<p><code>quit</code> … terminates the interactive session and quits the program</p>
-<h4 id="iam">IAM<a class="headerlink" href="#iam" title="Permanent link">&para;</a></h4>
-<p><code>iam-user</code> … allows you to describe the calling AWS IAM user details</p>
-<p><code>iam-roles</code> … allows you to select an AWS IAM role to explore and describe its details</p>
-<p><code>iam-policies</code> … allows you to select an AWS IAM policy to explore and describe its details</p>
-<h4 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h4>
-<p><code>k8s-pods</code> … allows you to select a Kubernetes pod to explore and describe its details</p>
-<p><code>k8s-sa</code> … allows you to select an Kubernetes service accounts to explore and describe its details</p>
-<p><code>k8s-secrets</code> … allows you to select a Kubernetes secret to explore and describe its details</p>
+<p>The available commands in <code>rbIAM</code> v0.2 are:</p>
+<ol>
+<li>
+<p>General:</p>
+<ul>
+<li><code>history</code> … lists the history of selected items</li>
+<li><code>sync</code> … synchronizes the local state with the remote one from IAM and Kubernetes</li>
+<li><code>help</code> … lists available commands and provides usage tips</li>
+<li><code>quit</code> … terminates the interactive session and quits the program</li>
+</ul>
+</li>
+<li>
+<p>For exploring AWS IAM:</p>
+<ul>
+<li><code>iam-user</code> … allows you to describe the calling AWS IAM user details</li>
+<li><code>iam-roles</code> … allows you to select an AWS IAM role and describe its details</li>
+<li><code>iam-policies</code> … allows you to select an AWS IAM policy and describe its details</li>
+</ul>
+</li>
+<li>For exploring Kubernetes RBAC:<ul>
+<li><code>k8s-pods</code> … allows you to select a Kubernetes pod and describe its details</li>
+<li><code>k8s-sa</code> … allows you to select an Kubernetes service accounts and describe its details</li>
+<li><code>k8s-secrets</code> … allows you to select a Kubernetes secret and describe its details</li>
+</ul>
+</li>
+</ol>
 <h3 id="walkthrough">Walkthrough<a class="headerlink" href="#walkthrough" title="Permanent link">&para;</a></h3>
+<p>In the following we do an end-to-end walkthrough, showing <code>rbIAM</code> in action.</p>
 <h4 id="launching-terminating">Launching &amp; terminating<a class="headerlink" href="#launching-terminating" title="Permanent link">&para;</a></h4>
-<p>After you launch the tool you should see something like this:</p>
+<p>After you launch the tool by typing <code>rbiam</code> in the shell of your choice, you should see something like this:</p>
 <p><img alt="startup screen" src="../img/w_startup.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
-<p>When hitting the <code>TAB</code> key or → (right arrow key) then the top-level menu appears.</p>
+<p>On startup, <code>rbiam</code> queries both IAM and Kubernetes to get all the pertinent info, from the point of view of the authenticated user. This can take a couple of seconds, and if anything changes, for example you created a new secret in Kubernetes or attached a new policy to a role, you can use the <code>sync</code> command to manually trigger this process.</p>
+<p>Now, use the <code>TAB</code> key or → (right arrow key) to display the top-level menu:</p>
 <p><img alt="top-level menu" src="../img/w_toplevelmenu.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -608,31 +570,35 @@ command and terminate the program.</p>
 <p class="admonition-title">Tip</p>
 <p>In order to clear the screen, you can hit <code>CTRL+L</code>.</p>
 </div>
-<h4 id="querying-iam-user-info">Querying IAM user info<a class="headerlink" href="#querying-iam-user-info" title="Permanent link">&para;</a></h4>
-<p>To learn about the logged in AWS user and caller identity, use the <code>iam-user</code>:</p>
+<p>Now that we know how to launch and terminate <code>rbIAM</code>, let's look something up.</p>
+<h4 id="markdown">Querying IAM user info<a class="headerlink" href="#markdown" title="Permanent link">&para;</a></h4>
+<p>To learn about the logged in AWS user and their caller identity, use the <code>iam-user</code> command:</p>
 <p><img alt="AWS IAM user" src="../img/w_iam_user.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
-<h4 id="exploring-iam-roles-policies">Exploring IAM roles &amp; policies<a class="headerlink" href="#exploring-iam-roles-policies" title="Permanent link">&para;</a></h4>
-<p>If you want to learn about AWS roles, use the <code>iam-roles</code> command. Once selected,
-you will see a list of IAM roles you can select from or start typing to filter
-down the list. For example, here we used <code>eksctl</code> to filter down the list to two
-entries and then selected one for exploration with <code>ENTER</code>:</p>
+<p>Above, we've hidden certain sensitive info but, naturally, when you execute the
+command you'll see the actual values.</p>
+<h4 id="markdown">Exploring IAM roles &amp; policies<a class="headerlink" href="#markdown" title="Permanent link">&para;</a></h4>
+<p>If you want to learn about AWS roles, use the <code>iam-roles</code> command. Once selected, 
+you will see a list of IAM roles you can select from or start typing to filter down 
+the list. For example, here we used <code>eksctl</code> to filter down the list to two entries 
+and then selected one for exploration with <code>ENTER</code>:</p>
 <p><img alt="AWS IAM roles" src="../img/w_iam_roles.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>In order to clear the term to the left of the cursor, you can hit <code>CTRL+W</code>.</p>
 </div>
-<p>To learn about AWS policies, use the <code>iam-policies</code> command.</p>
+<p>Further, lo learn about AWS policies, use the <code>iam-policies</code> command like so:</p>
 <p><img alt="AWS IAM policies" src="../img/w_iam_policies.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
-<h4 id="exploring-kubernetes-pods">Exploring Kubernetes pods<a class="headerlink" href="#exploring-kubernetes-pods" title="Permanent link">&para;</a></h4>
-<p>Starting off with your app, you want to explore an Kubernetes pod. For this, use
-the <code>k8s-pods</code> command as follows:</p>
+<p>Now that we've covered the IAM side of the house, let's move on to RBAC.</p>
+<h4 id="markdown">Exploring Kubernetes pods<a class="headerlink" href="#markdown" title="Permanent link">&para;</a></h4>
+<p>Starting off with the app of interest, you want to find the Kubernetes pod hosting it.
+For this, use the <code>k8s-pods</code> command as follows:</p>
 <p><img alt="Kubernetes pods" src="../img/w_k8s_pods.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <p>Now that we have the pod info, we can continue with the service account we found
-here, in this case <code>fluent-bit</code>.</p>
-<h4 id="exploring-kubernetes-service-accounts-secrets">Exploring Kubernetes service accounts &amp; secrets<a class="headerlink" href="#exploring-kubernetes-service-accounts-secrets" title="Permanent link">&para;</a></h4>
+here, in this case, it's the one named <code>fluent-bit</code>.</p>
+<h4 id="markdown">Exploring Kubernetes service accounts &amp; secrets<a class="headerlink" href="#markdown" title="Permanent link">&para;</a></h4>
 <p>To explore Kubernetes service accounts and their secrets, use the <code>k8s-sa</code> and 
 the <code>k8s-secrets</code> command, respectively. From the previous step we've gathered
-that for the Fluent Bit pod we're interested in the service account <code>fluent-bit</code> 
+that for the Fluent Bit pod we're interested in the service account <code>fluent-bit</code>, 
 so let's look this up along with its secret:</p>
 <p><img alt="Kubernetes service accounts &amp; secrets" src="../img/w_k8s_sa_secret.png" style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);" /></p>
 <div class="admonition note">
@@ -642,6 +608,9 @@ them into clear text so that you can directly copy &amp; paste them. For example
 in the case shown above, the value of <code>ca.cert</code> would be the actual content of
 the certificate.</p>
 </div>
+<p>At any point you can use the <code>history</code> command to list the selected items in
+reverse chronological order. In our case this would be <code>fluent-bit-token-5bwm6</code>,
+<code>fluent-bit</code>, and <code>fluent-bit-cscsh</code>.</p>
                 
                   
                 
