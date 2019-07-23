@@ -67,13 +67,13 @@ Role
 
 :   Defines a set of strictly additive rules, representing a set of permissions.
     These permissions define what actions an **entity** is allowed to carry out
-    with respect to a set of resources. Can be namespaced (then the role is only valid in the context of said namespace) or cluster wide.
+    with respect to a set of **resources**. Can be namespaced (then the role is only valid in the context of said namespace) or cluster-wide.
 
 Role binding
 
 :   Grants the permissions defined in a **role** to an **entity**. Can be
     namespaced (then the binding is only valid in the context of said namespace)
-    or cluster wide. Note that it is perfectly possible and even desirable to define a cluster-wide role and then use a (namespaced) role binding. This allows straight-forward re-use of roles across namespaces.
+    or cluster-wide. Note that it is perfectly possible and even desirable to define a cluster-wide role and then use a (namespaced) role binding. This allows straight-forward re-use of roles across namespaces.
 
 For example, for our Fluent Bit output plugin deployed as a `DaemonSet` in EKS, the RBAC regime looks as follows (compare: [role & role binding used](https://github.com/aws-samples/amazon-ecs-fluent-bit-daemon-service/blob/master/eks/eks-fluent-bit-daemonset-rbac.yaml)):
 
