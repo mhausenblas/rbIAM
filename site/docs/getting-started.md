@@ -2,8 +2,6 @@
 
 This guide walks you through the setup and usage of `rbIAM`.
 
-
-
 ## Prerequisites
 
 In order for you to use `rbIAM`, the following must be true:
@@ -41,10 +39,10 @@ The following lists the commands `rbIAM` supports and then walks you through an 
 
 ### Commands
 
-The available commands in `rbIAM` v0.2 are:
+The available commands in `rbIAM` v0.3 are:
 
 1. General:
-    * `history` … lists the history of selected items
+    * `history` … lists history of selected items in reverse chronological order
     * `sync` … synchronizes the local state with the remote one from IAM and Kubernetes
     * `help` … lists available commands and provides usage tips
     * `quit` … terminates the interactive session and quits the program
@@ -53,10 +51,16 @@ The available commands in `rbIAM` v0.2 are:
     * `iam-user` … allows you to describe the calling AWS IAM user details
     * `iam-roles` … allows you to select an AWS IAM role and describe its details
     * `iam-policies` … allows you to select an AWS IAM policy and describe its details
+  
 3. For exploring Kubernetes RBAC:
     * `k8s-pods` … allows you to select a Kubernetes pod and describe its details
     * `k8s-sa` … allows you to select an Kubernetes service accounts and describe its details
     * `k8s-secrets` … allows you to select a Kubernetes secret and describe its details
+ 
+ 4. For tracing:
+    * `trace` … start tracing
+    * `export-raw` … export trace to JSON dump in current working directory (stops tracing)
+    * `export-graph` … export trace as DOT file in current working directory (stops tracing) 
 
 ### Walkthrough
 
@@ -143,3 +147,44 @@ so let's look this up along with its secret:
 At any point you can use the `history` command to list the selected items in
 reverse chronological order. In our case this would be `fluent-bit-token-5bwm6`,
 `fluent-bit`, and `fluent-bit-cscsh`.
+
+#### Tracing
+
+Tracing in `rbIAM` means remembering consecutive queries for selected items for 
+the purpose to export them. If you imaging all the items such as IAM roles and
+policies as well as Kubernetes service accounts and pods forming a graph, a 
+trace is essentially a finite [path](https://en.wikipedia.org/wiki/Path_(graph_theory)). 
+
+You start creating a trace by issuing the `trace` command and when you're done, you'd use one of the `export` commands such as `export-raw`.
+
+!!! tip
+    When you start tracing, the prompt will change from `?  ` to `T  `, indicating that you're currently tracing. As soon as you issue an
+    export command the prompt will turn back to `?  `.
+
+Let's have a look at it:
+
+![Tracing](img/w_tracing.png){: style="width:95%; display: block; margin: 10px auto 50px auto; padding: 1px; -webkit-box-shadow: -2px 0px 10px 0px rgba(0,0,0,0.4); -moz-box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4); box-shadow: -2px 0px 18px 0px rgba(0,0,0,0.4);"}
+
+We can now check the exported trace, in raw format using JSON serialization, 
+available via the file (in our case) `rbiam-trace-1564327989.json`:
+
+```json
+{"metadata":{"name":"s3-echoer-7q9nt","namespace":"default","labels":{"controller-uid":"be4654b6-aec2-11e9-a44e-02a12cf44842","job-name":"s3-echoer"},"annotations":{"kubernetes.io/psp":"eks.privileged"}},"spec":{"volumes":[{"name":"s3-echoer-token-cm9tx"}],"containers":[{"name":"main","image":"amazonlinux:2018.03","command":["sh","-c","curl -sL -o /s3-echoer https://github.com/mhausenblas/s3-echoer/releases/latest/download/s3-echoer-linux \u0026\u0026 chmod +x /s3-echoer \u0026\u0026 sleep 10000"],"env":[{"name":"AWS_DEFAULT_REGION","value":"us-west-2"}],"imagePullPolicy":"IfNotPresent"}],"serviceAccountName":"s3-echoer"},"status":{"phase":"Succeeded","conditions":[{"type":"Initialized","status":"True","reason":"PodCompleted"},{"type":"Ready","status":"False","reason":"PodCompleted"},{"type":"ContainersReady","status":"False","reason":"PodCompleted"},{"type":"PodScheduled","status":"True"}],"hostIP":"192.168.182.80","podIP":"192.168.159.202"}}
+{"metadata":{"name":"s3-echoer","namespace":"default"},"secrets":[{"name":"s3-echoer-token-cm9tx"}]}
+```
+
+When you look closely, you will notice that the trace only contains the two 
+items we queried for after we issued the `trace` command and before we entered
+the `export-raw` command. The `history` command at the bottom confirms this.
+Remember that the history has the items in reverse chronological order, that is,
+the most recent item is always on top of the list.
+
+While an export command will stop tracing, the traced items will be preserved.
+In other words, until you start a new trace you can export the current trace in
+different formats. For example, you could issue first an `export-raw` command 
+and then an `export-graph` command and you would end up with two different
+representations of the same trace, once in JSON and once in the [DOT](https://www.graphviz.org/doc/info/lang.html) format.
+
+
+!!! tip
+    To view DOT files, either use an online tool such as [dreampuf.github.io/GraphvizOnline/](https://dreampuf.github.io/GraphvizOnline/) or install Graphviz locally. For example, on macOS you'd do this via `brew install graphviz`.
