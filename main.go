@@ -29,10 +29,12 @@ func main() {
 	fmt.Println("Gathering info from IAM and Kubernetes. This may take a bit, please stand by ...")
 	ag = NewAccessGraph(cfg)
 	// fmt.Println(ag)
+	var prefix string
 	tracecntr := 0
 	tracemode := false
 	cursel := "help" // make sure to first show the help to guide users what to do
 	for {
+		prefix = "? "
 		switch cursel {
 		case "iam-user":
 			presult(formatCaller(ag))
@@ -131,7 +133,10 @@ func main() {
 		default:
 			presult("Not yet implemented, sorry\n")
 		}
-		cursel = prompt.Input("? ", toplevel,
+		if tracemode {
+			prefix = "T "
+		}
+		cursel = prompt.Input(prefix, toplevel,
 			prompt.OptionMaxSuggestion(20),
 			prompt.OptionSuggestionBGColor(prompt.DarkBlue),
 			prompt.OptionSelectedDescriptionBGColor(prompt.DarkBlue))
