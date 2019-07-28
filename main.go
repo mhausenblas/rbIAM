@@ -110,6 +110,14 @@ func main() {
 				continue
 			}
 			presult(fmt.Sprintf("Raw trace exported to %v\n", fn))
+		case "export-graph":
+			tracemode = false
+			fn, err := exportGraph(history[0:tracecntr], ag)
+			if err != nil {
+				pwarning(fmt.Sprintf("Can't export trace: %v\n", err))
+				continue
+			}
+			presult(fmt.Sprintf("Graph trace exported to %v\n", fn))
 		case "help":
 			presult(fmt.Sprintf("\nThis is rbIAM in version %v\n\n", Version))
 			presult(strings.Repeat("-", 80))
@@ -124,6 +132,7 @@ func main() {
 			presult("- sync … to refresh the local data\n")
 			presult("- trace … start tracing\n")
 			presult("- export-raw … stop tracing and export trace to JSON dump in current working directory\n")
+			presult("- export-graph … stop tracing and export trace as DOT file in current working directory\n")
 			presult(strings.Repeat("-", 80))
 			presult("\n\nNote: simply start typing and/or use the tab and cursor keys to select.\n")
 			presult("CTRL+L clears the screen and if you're stuck type 'help' or 'quit' to leave.\n\n")

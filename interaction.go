@@ -17,6 +17,7 @@ func toplevel(d prompt.Document) []prompt.Suggest {
 		{Text: "sync", Description: "Synchronize the local state with IAM and Kubernetes"},
 		{Text: "trace", Description: "Start tracing"},
 		{Text: "export-raw", Description: "Stop tracing and export trace to JSON dump in current working directory"},
+		{Text: "export-graph", Description: "Stop tracing and export trace as DOT file in current working directory"},
 		{Text: "help", Description: "Explain how it works and show available commands"},
 		{Text: "quit", Description: "Terminate the interactive session and quit"},
 	}
