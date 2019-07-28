@@ -29,13 +29,11 @@ func main() {
 	fmt.Println("Gathering info from IAM and Kubernetes. This may take a bit, please stand by ...")
 	ag = NewAccessGraph(cfg)
 	// fmt.Println(ag)
-
+	tracecntr := 0
+	tracemode := false
 	cursel := "help" // make sure to first show the help to guide users what to do
 	for {
 		switch cursel {
-		case "sync":
-			fmt.Println("Gathering info from IAM and Kubernetes. This may take a bit, please stand by ...")
-			ag = NewAccessGraph(cfg)
 		case "iam-user":
 			presult(formatCaller(ag))
 		case "iam-roles":
@@ -45,6 +43,9 @@ func main() {
 			if role, ok := ag.Roles[targetrole]; ok {
 				presult(formatRole(&role))
 				appendhist("IAM role", targetrole)
+				if tracemode {
+					tracecntr++
+				}
 			}
 		case "iam-policies":
 			targetpolicy := prompt.Input("  ↪ ", selectPolicy,
@@ -53,6 +54,9 @@ func main() {
 			if policy, ok := ag.Policies[targetpolicy]; ok {
 				presult(formatPolicy(&policy))
 				appendhist("IAM policy", targetpolicy)
+				if tracemode {
+					tracecntr++
+				}
 			}
 		case "k8s-sa":
 			targetsa := prompt.Input("  ↪ ", selectSA,
@@ -61,6 +65,9 @@ func main() {
 			if sa, ok := ag.ServiceAccounts[targetsa]; ok {
 				presult(formatSA(&sa))
 				appendhist("Kubernetes service account", targetsa)
+				if tracemode {
+					tracecntr++
+				}
 			}
 		case "k8s-secrets":
 			targetsec := prompt.Input("  ↪ ", selectSecret,
@@ -69,6 +76,9 @@ func main() {
 			if secret, ok := ag.Secrets[targetsec]; ok {
 				presult(formatSecret(&secret))
 				appendhist("Kubernetes secret", targetsec)
+				if tracemode {
+					tracecntr++
+				}
 			}
 		case "k8s-pods":
 			targetpod := prompt.Input("  ↪ ", selectPod,
@@ -77,9 +87,27 @@ func main() {
 			if pod, ok := ag.Pods[targetpod]; ok {
 				presult(formatPod(&pod))
 				appendhist("Kubernetes pod", targetpod)
+				if tracemode {
+					tracecntr++
+				}
 			}
 		case "history":
 			dumphist()
+		case "sync":
+			fmt.Println("Gathering info from IAM and Kubernetes. This may take a bit, please stand by ...")
+			ag = NewAccessGraph(cfg)
+		case "trace":
+			tracemode = true
+			tracecntr = 0
+			presult("Starting to trace now. Use an 'export-xxx' command to stop tracing and export to one of the supported formats.\n")
+		case "export-raw":
+			tracemode = false
+			fn, err := exportRaw(history[0:tracecntr], ag)
+			if err != nil {
+				pwarning(fmt.Sprintf("Can't export trace: %v\n", err))
+				continue
+			}
+			presult(fmt.Sprintf("Raw trace exported to %v\n", fn))
 		case "help":
 			presult(fmt.Sprintf("\nThis is rbIAM in version %v\n\n", Version))
 			presult(strings.Repeat("-", 80))
@@ -92,6 +120,8 @@ func main() {
 			presult("- k8s-pods … to look up a Kubernetes pod\n")
 			presult("- history … show history\n")
 			presult("- sync … to refresh the local data\n")
+			presult("- trace … start tracing\n")
+			presult("- export-raw … stop tracing and export trace to JSON dump in current working directory\n")
 			presult(strings.Repeat("-", 80))
 			presult("\n\nNote: simply start typing and/or use the tab and cursor keys to select.\n")
 			presult("CTRL+L clears the screen and if you're stuck type 'help' or 'quit' to leave.\n\n")

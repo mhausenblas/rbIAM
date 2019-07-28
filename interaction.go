@@ -15,6 +15,8 @@ func toplevel(d prompt.Document) []prompt.Suggest {
 		{Text: "k8s-pods", Description: "Select a Kubernetes pod to explore"},
 		{Text: "history", Description: "Show the history of selected items"},
 		{Text: "sync", Description: "Synchronize the local state with IAM and Kubernetes"},
+		{Text: "trace", Description: "Start tracing"},
+		{Text: "export-raw", Description: "Stop tracing and export trace to JSON dump in current working directory"},
 		{Text: "help", Description: "Explain how it works and show available commands"},
 		{Text: "quit", Description: "Terminate the interactive session and quit"},
 	}
