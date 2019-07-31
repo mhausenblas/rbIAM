@@ -185,6 +185,7 @@ different formats. For example, you could issue first an `export-raw` command
 and then an `export-graph` command and you would end up with two different
 representations of the same trace, once in JSON and once in the [DOT](https://www.graphviz.org/doc/info/lang.html) format.
 
-
 !!! tip
     To view DOT files, either use an online tool such as [dreampuf.github.io/GraphvizOnline/](https://dreampuf.github.io/GraphvizOnline/) or install Graphviz locally. For example, on macOS you'd do this via `brew install graphviz`.
+
+to do: show traced and exported Graph here
