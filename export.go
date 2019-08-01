@@ -17,8 +17,7 @@ import (
 func exportRaw(trace []string, ag *AccessGraph) (string, error) {
 	dump := ""
 	for _, item := range trace {
-		itype := strings.TrimPrefix(strings.Split(item, "]")[0], "[")
-		ikey := strings.TrimSpace(strings.Split(item, "]")[1])
+		itype, ikey := extractTK(item)
 		switch itype {
 		case "IAM role":
 			b, err := json.Marshal(ag.Roles[ikey])
@@ -75,8 +74,7 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 	g.Edge(lsa, lsecret)
 
 	for _, item := range trace {
-		itype := strings.TrimPrefix(strings.Split(item, "]")[0], "[")
-		ikey := strings.TrimSpace(strings.Split(item, "]")[1])
+		itype, ikey := extractTK(item)
 		switch itype {
 		case "IAM role":
 		case "IAM policy":
@@ -94,4 +92,15 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 		return "", err
 	}
 	return filename, nil
+}
+
+// extractTK takes a history item in the form [TYPE] KEY
+// and return t as the TYPE and k as the KEY, for example:
+// [Kubernetes service account] default:s3-echoer ->
+// t == Kubernetes service account
+// k == default:s3-echoer
+func extractTK(item string) (t, k string) {
+	t = strings.TrimPrefix(strings.Split(item, "]")[0], "[")
+	k = strings.TrimSpace(strings.Split(item, "]")[1])
+	return
 }
