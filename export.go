@@ -67,10 +67,26 @@ func exportRaw(trace []string, ag *AccessGraph) (string, error) {
 // rbiam-trace-1564315687.dot
 func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 	g := dot.NewGraph(dot.Directed)
+	// legend:
+	lsa := g.Node("SERVICE ACCOUNT").Attr("style", "filled").Attr("fillcolor", "#33ff33").Attr("fontcolor", "#000000")
+	lsecret := g.Node("SECRET").Attr("style", "filled").Attr("fillcolor", "#ff3399").Attr("fontcolor", "#000000")
+	lpod := g.Node("POD").Attr("style", "filled").Attr("fillcolor", "#9900ff").Attr("fontcolor", "#000000")
+	g.Edge(lpod, lsa)
+	g.Edge(lsa, lsecret)
+
 	for _, item := range trace {
-		// itype := strings.TrimPrefix(strings.Split(item, "]")[0], "[")
+		itype := strings.TrimPrefix(strings.Split(item, "]")[0], "[")
 		ikey := strings.TrimSpace(strings.Split(item, "]")[1])
-		g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#ff9900").Attr("fontcolor", "#030303")
+		switch itype {
+		case "IAM role":
+		case "IAM policy":
+		case "Kubernetes service account":
+			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#33ff33").Attr("fontcolor", "#000000")
+		case "Kubernetes secret":
+			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#ff3399").Attr("fontcolor", "#000000")
+		case "Kubernetes pod":
+			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#9900ff").Attr("fontcolor", "#000000")
+		}
 	}
 	filename := fmt.Sprintf("rbiam-trace-%v.dot", time.Now().Unix())
 	err := ioutil.WriteFile(filename, []byte(g.String()), 0644)
