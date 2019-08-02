@@ -67,9 +67,9 @@ func exportRaw(trace []string, ag *AccessGraph) (string, error) {
 func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 	g := dot.NewGraph(dot.Directed)
 	// legend:
-	lsa := g.Node("SERVICE ACCOUNT").Attr("style", "filled").Attr("fillcolor", "#33ff33").Attr("fontcolor", "#000000")
-	lsecret := g.Node("SECRET").Attr("style", "filled").Attr("fillcolor", "#ff3399").Attr("fontcolor", "#000000")
-	lpod := g.Node("POD").Attr("style", "filled").Attr("fillcolor", "#9900ff").Attr("fontcolor", "#000000")
+	lsa := g.Node("SERVICE ACCOUNT").Attr("style", "filled").Attr("fillcolor", "#1BFF9F").Attr("fontcolor", "#000000")
+	lsecret := g.Node("SECRET").Attr("style", "filled").Attr("fillcolor", "#F9ED49").Attr("fontcolor", "#000000")
+	lpod := g.Node("POD").Attr("style", "filled").Attr("fillcolor", "#4260FA").Attr("fontcolor", "#f0f0f0")
 	g.Edge(lpod, lsa)
 	g.Edge(lsa, lsecret)
 
@@ -79,11 +79,11 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 		case "IAM role":
 		case "IAM policy":
 		case "Kubernetes service account":
-			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#33ff33").Attr("fontcolor", "#000000")
+			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#1BFF9F").Attr("fontcolor", "#000000")
 		case "Kubernetes secret":
-			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#ff3399").Attr("fontcolor", "#000000")
+			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#F9ED49").Attr("fontcolor", "#000000")
 		case "Kubernetes pod":
-			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#9900ff").Attr("fontcolor", "#000000")
+			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#4260FA").Attr("fontcolor", "#f0f0f0")
 		}
 	}
 	filename := fmt.Sprintf("rbiam-trace-%v.dot", time.Now().Unix())
