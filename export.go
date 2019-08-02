@@ -66,6 +66,8 @@ func exportRaw(trace []string, ag *AccessGraph) (string, error) {
 // rbiam-trace-1564315687.dot
 func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 	g := dot.NewGraph(dot.Directed)
+	// make sure the legend is at the bottom:
+	g.Attr("newrank", "true")
 	// legend:
 	lsa := formatAsServiceAccount(g.Node("SERVICE ACCOUNT"))
 	lsecret := formatAsSecret(g.Node("SECRET"))
@@ -75,9 +77,10 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 
 	// first let's draw the nodes and remember the
 	// graph entry points for traversals to later draw
-	// the edges (Kubernetes pods and IAM roles)
+	// the edges starting with Kubernetes pods and IAM roles:
 	pods := make(map[string]dot.Node)
 	sas := make(map[string]dot.Node)
+	secrets := make(map[string]dot.Node)
 	for _, item := range trace {
 		itype, ikey := extractTK(item)
 		switch itype {
@@ -86,14 +89,14 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 		case "Kubernetes service account":
 			sas[ikey] = formatAsServiceAccount(g.Node(ikey))
 		case "Kubernetes secret":
-			formatAsSecret(g.Node(ikey))
+			secrets[ikey] = formatAsSecret(g.Node(ikey))
 		case "Kubernetes pod":
 			pods[ikey] = formatAsPod(g.Node(ikey))
 		}
 	}
 
-	// next, we draw the edges, using K8s pods and IAM roles
-	// as the entry points into the graph
+	// next, we draw the edges:
+	// pods -> service accounts
 	for podname, node := range pods {
 		for _, item := range trace {
 			itype, ikey := extractTK(item)
@@ -105,8 +108,19 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 			}
 		}
 	}
-	// make sure the legend is at the bottom:
-	g.Attr("newrank", "true")
+	// service accounts -> secrets
+	for saname, node := range sas {
+		for _, item := range trace {
+			itype, ikey := extractTK(item)
+			if itype == "Kubernetes secret" {
+				// for now we simply take the first secret of the service account, should really iterate over all and check each:
+				sasecrect := namespaceit(ag.ServiceAccounts[saname].Namespace, ag.ServiceAccounts[saname].Secrets[0].Name)
+				if sasecrect == ikey {
+					g.Edge(node, secrets[ikey])
+				}
+			}
+		}
+	}
 
 	// now we can write out the graph into a file in DOT format:
 	filename := fmt.Sprintf("rbiam-trace-%v.dot", time.Now().Unix())
