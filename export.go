@@ -69,11 +69,15 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 	// make sure the legend is at the bottom:
 	g.Attr("newrank", "true")
 	// legend:
-	lsa := formatAsServiceAccount(g.Node("SERVICE ACCOUNT"))
-	lsecret := formatAsSecret(g.Node("SECRET"))
-	lpod := formatAsPod(g.Node("POD"))
-	g.Edge(lpod, lsa, "uses").Attr("fontname", "Helvetica")
-	g.Edge(lsa, lsecret, "has").Attr("fontname", "Helvetica")
+	legend := g.Subgraph("LEGEND", dot.ClusterOption{})
+	lsa := formatAsServiceAccount(legend.Node("Kubernetes service account"))
+	lsecret := formatAsSecret(legend.Node("Kubernetes secret"))
+	lpod := formatAsPod(legend.Node("Kubernetes pod"))
+	lrole := formatAsRole(legend.Node("IAM role"))
+	lpolicy := formatAsPolicy(legend.Node("IAM policy"))
+	legend.Edge(lpod, lsa, "uses").Attr("fontname", "Helvetica")
+	legend.Edge(lsa, lsecret, "has").Attr("fontname", "Helvetica")
+	legend.Edge(lrole, lpolicy, "has").Attr("fontname", "Helvetica")
 
 	// first let's draw the nodes and remember the
 	// graph entry points for traversals to later draw
