@@ -95,19 +95,18 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 	// next, we draw the edges, using K8s pods and IAM roles
 	// as the entry points into the graph
 	for podname, node := range pods {
-		fmt.Printf("Looking at pod %v in node %v\n", podname, node)
 		for _, item := range trace {
 			itype, ikey := extractTK(item)
 			if itype == "Kubernetes service account" {
 				podsa := namespaceit(ag.Pods[podname].Namespace, ag.Pods[podname].Spec.ServiceAccountName)
-				fmt.Printf("Checking service account %v against the pod's service account %v\n", ikey, podsa)
 				if podsa == ikey {
-					fmt.Printf("Connecting %v to %v", node, sas[ikey])
 					g.Edge(node, sas[ikey])
 				}
 			}
 		}
 	}
+	// make sure the legend is at the bottom:
+	g.Attr("newrank", "true")
 
 	// now we can write out the graph into a file in DOT format:
 	filename := fmt.Sprintf("rbiam-trace-%v.dot", time.Now().Unix())
