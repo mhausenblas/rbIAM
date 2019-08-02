@@ -66,27 +66,50 @@ func exportRaw(trace []string, ag *AccessGraph) (string, error) {
 // rbiam-trace-1564315687.dot
 func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 	g := dot.NewGraph(dot.Directed)
-
 	// legend:
 	lsa := formatAsServiceAccount(g.Node("SERVICE ACCOUNT"))
 	lsecret := formatAsSecret(g.Node("SECRET"))
 	lpod := formatAsPod(g.Node("POD"))
-	g.Edge(lpod, lsa)
-	g.Edge(lsa, lsecret)
+	g.Edge(lpod, lsa, "uses").Attr("fontname", "Helvetica")
+	g.Edge(lsa, lsecret, "has").Attr("fontname", "Helvetica")
 
+	// first let's draw the nodes and remember the
+	// graph entry points for traversals to later draw
+	// the edges (Kubernetes pods and IAM roles)
+	pods := make(map[string]dot.Node)
+	sas := make(map[string]dot.Node)
 	for _, item := range trace {
 		itype, ikey := extractTK(item)
 		switch itype {
 		case "IAM role":
 		case "IAM policy":
 		case "Kubernetes service account":
-			formatAsServiceAccount(g.Node(ikey))
+			sas[ikey] = formatAsServiceAccount(g.Node(ikey))
 		case "Kubernetes secret":
 			formatAsSecret(g.Node(ikey))
 		case "Kubernetes pod":
-			formatAsPod(g.Node(ikey))
+			pods[ikey] = formatAsPod(g.Node(ikey))
 		}
 	}
+
+	// next, we draw the edges, using K8s pods and IAM roles
+	// as the entry points into the graph
+	for podname, node := range pods {
+		fmt.Printf("Looking at pod %v in node %v\n", podname, node)
+		for _, item := range trace {
+			itype, ikey := extractTK(item)
+			if itype == "Kubernetes service account" {
+				podsa := namespaceit(ag.Pods[podname].Namespace, ag.Pods[podname].Spec.ServiceAccountName)
+				fmt.Printf("Checking service account %v against the pod's service account %v\n", ikey, podsa)
+				if podsa == ikey {
+					fmt.Printf("Connecting %v to %v", node, sas[ikey])
+					g.Edge(node, sas[ikey])
+				}
+			}
+		}
+	}
+
+	// now we can write out the graph into a file in DOT format:
 	filename := fmt.Sprintf("rbiam-trace-%v.dot", time.Now().Unix())
 	err := ioutil.WriteFile(filename, []byte(g.String()), 0644)
 	if err != nil {
