@@ -66,10 +66,11 @@ func exportRaw(trace []string, ag *AccessGraph) (string, error) {
 // rbiam-trace-1564315687.dot
 func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 	g := dot.NewGraph(dot.Directed)
+
 	// legend:
-	lsa := g.Node("SERVICE ACCOUNT").Attr("style", "filled").Attr("fillcolor", "#1BFF9F").Attr("fontcolor", "#000000")
-	lsecret := g.Node("SECRET").Attr("style", "filled").Attr("fillcolor", "#F9ED49").Attr("fontcolor", "#000000")
-	lpod := g.Node("POD").Attr("style", "filled").Attr("fillcolor", "#4260FA").Attr("fontcolor", "#f0f0f0")
+	lsa := formatAsServiceAccount(g.Node("SERVICE ACCOUNT"))
+	lsecret := formatAsSecret(g.Node("SECRET"))
+	lpod := formatAsPod(g.Node("POD"))
 	g.Edge(lpod, lsa)
 	g.Edge(lsa, lsecret)
 
@@ -79,11 +80,11 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 		case "IAM role":
 		case "IAM policy":
 		case "Kubernetes service account":
-			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#1BFF9F").Attr("fontcolor", "#000000")
+			formatAsServiceAccount(g.Node(ikey))
 		case "Kubernetes secret":
-			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#F9ED49").Attr("fontcolor", "#000000")
+			formatAsSecret(g.Node(ikey))
 		case "Kubernetes pod":
-			g.Node(ikey).Attr("style", "filled").Attr("fillcolor", "#4260FA").Attr("fontcolor", "#f0f0f0")
+			formatAsPod(g.Node(ikey))
 		}
 	}
 	filename := fmt.Sprintf("rbiam-trace-%v.dot", time.Now().Unix())
@@ -103,4 +104,16 @@ func extractTK(item string) (t, k string) {
 	t = strings.TrimPrefix(strings.Split(item, "]")[0], "[")
 	k = strings.TrimSpace(strings.Split(item, "]")[1])
 	return
+}
+
+func formatAsServiceAccount(n dot.Node) dot.Node {
+	return n.Attr("style", "filled").Attr("fillcolor", "#1BFF9F").Attr("fontcolor", "#000000").Attr("fontname", "Helvetica")
+}
+
+func formatAsSecret(n dot.Node) dot.Node {
+	return n.Attr("style", "filled").Attr("fillcolor", "#F9ED49").Attr("fontcolor", "#000000").Attr("fontname", "Helvetica")
+}
+
+func formatAsPod(n dot.Node) dot.Node {
+	return n.Attr("style", "filled").Attr("fillcolor", "#4260FA").Attr("fontcolor", "#f0f0f0").Attr("fontname", "Helvetica")
 }
