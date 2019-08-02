@@ -85,7 +85,9 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 		itype, ikey := extractTK(item)
 		switch itype {
 		case "IAM role":
+			formatAsRole(g.Node(ikey))
 		case "IAM policy":
+			formatAsPolicy(g.Node(ikey))
 		case "Kubernetes service account":
 			sas[ikey] = formatAsServiceAccount(g.Node(ikey))
 		case "Kubernetes secret":
@@ -140,6 +142,14 @@ func extractTK(item string) (t, k string) {
 	t = strings.TrimPrefix(strings.Split(item, "]")[0], "[")
 	k = strings.TrimSpace(strings.Split(item, "]")[1])
 	return
+}
+
+func formatAsRole(n dot.Node) dot.Node {
+	return n.Attr("style", "filled").Attr("fillcolor", "#FD8564").Attr("fontcolor", "#000000").Attr("fontname", "Helvetica")
+}
+
+func formatAsPolicy(n dot.Node) dot.Node {
+	return n.Attr("style", "filled").Attr("fillcolor", "#D9A7F1").Attr("fontcolor", "#000000").Attr("fontname", "Helvetica")
 }
 
 func formatAsServiceAccount(n dot.Node) dot.Node {
