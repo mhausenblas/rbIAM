@@ -172,6 +172,9 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 		}
 	}
 
+	// IAM roles -> IAM policies
+	// https://godoc.org/github.com/aws/aws-sdk-go-v2/service/iam#Client.ListAttachedRolePoliciesRequest
+
 	// now we can write out the graph into a file in DOT format:
 	filename := fmt.Sprintf("rbiam-trace-%v.dot", time.Now().Unix())
 	err := ioutil.WriteFile(filename, []byte(g.String()), 0644)
