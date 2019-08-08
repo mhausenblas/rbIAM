@@ -139,6 +139,11 @@ func main() {
 		case "quit":
 			presult("bye!\n")
 			os.Exit(0)
+		case "dump":
+			err := dump(ag)
+			if err != nil {
+				pwarning(fmt.Sprintf("Can't export access graph: %v\n", err))
+			}
 		default:
 			presult("Not yet implemented, sorry\n")
 		}

@@ -10,6 +10,17 @@ import (
 	"github.com/emicklei/dot"
 )
 
+// dump exports the entire access graph.
+func dump(ag *AccessGraph) error {
+	b, err := json.Marshal(ag)
+	if err != nil {
+		return err
+	}
+	filename := fmt.Sprintf("rbiam-dump-%v.json", time.Now().Unix())
+	err = ioutil.WriteFile(filename, b, 0644)
+	return err
+}
+
 // exportRaw exports the trace as a raw dump in JSON format into a file
 // in the current working directory with a name of 'rbiam-trace-NNNNNNNNNN' with
 // the NNNNNNNNNN being the Unix timestamp of the creation time, for example:
