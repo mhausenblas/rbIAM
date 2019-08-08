@@ -98,8 +98,7 @@ func formatRole(role *iam.Role) string {
 	)
 }
 
-// policies queries IAM for attached policies, related to EKS.
-// This is done simply by checking if the policy ARN contains EKS or eks.
+// policies queries IAM for attached policies
 func (ag *AccessGraph) policies(cfg aws.Config) error {
 	svc := iam.New(cfg)
 	req := svc.ListPoliciesRequest(&iam.ListPoliciesInput{OnlyAttached: aws.Bool(true)})
