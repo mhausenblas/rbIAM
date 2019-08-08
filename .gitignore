@@ -14,5 +14,5 @@
 .DS_Store
 /site/site
 /release
-rbiam-trace-*.json
-rbiam-trace-*.dot
+rbiam*.json
+rbiam*.dot
