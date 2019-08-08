@@ -100,6 +100,7 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 	legend.Edge(lpod, lsa, "uses").Attr("fontname", "Helvetica")
 	legend.Edge(lsa, lsecret, "has").Attr("fontname", "Helvetica")
 	legend.Edge(lrole, lpolicy, "has").Attr("fontname", "Helvetica")
+	legend.Edge(lpod, lrole, "assumes").Attr("fontname", "Helvetica")
 
 	// first let's draw the nodes and remember the
 	// graph entry points for traversals to later draw
@@ -107,13 +108,15 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 	pods := make(map[string]dot.Node)
 	sas := make(map[string]dot.Node)
 	secrets := make(map[string]dot.Node)
+	roles := make(map[string]dot.Node)
+	policies := make(map[string]dot.Node)
 	for _, item := range trace {
 		itype, ikey := extractTK(item)
 		switch itype {
 		case "IAM role":
-			formatAsRole(g.Node(ikey))
+			roles[ikey] = formatAsRole(g.Node(ikey))
 		case "IAM policy":
-			formatAsPolicy(g.Node(ikey))
+			policies[ikey] = formatAsPolicy(g.Node(ikey))
 		case "Kubernetes service account":
 			sas[ikey] = formatAsServiceAccount(g.Node(ikey))
 		case "Kubernetes secret":
@@ -146,6 +149,25 @@ func exportGraph(trace []string, ag *AccessGraph) (string, error) {
 				if sasecrect == ikey {
 					g.Edge(node, secrets[ikey])
 				}
+			}
+		}
+	}
+	// pods -> IAM roles
+	for podname, node := range pods {
+		for _, item := range trace {
+			itype, ikey := extractTK(item)
+			if itype == "IAM role" {
+				// for IRP-enabled pods:
+				for _, container := range ag.Pods[podname].Spec.Containers {
+					for _, envar := range container.Env {
+						if envar.Name == "AWS_ROLE_ARN" && envar.Value == ikey {
+							g.Edge(node, roles[ikey])
+						}
+					}
+				}
+				// for traditional, node-level IAM role assignment:
+				// iterate over EC2 instances and select the ones where the
+				// pods' hostIP matches, then take the EC2 NodeInstanceRole
 			}
 		}
 	}
