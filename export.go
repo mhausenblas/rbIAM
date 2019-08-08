@@ -21,6 +21,17 @@ func dump(ag *AccessGraph) error {
 	return err
 }
 
+// load imports access graph from filename
+func load(filename string) (*AccessGraph, error) {
+	ag := &AccessGraph{}
+	b, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return ag, err
+	}
+	err = json.Unmarshal(b, ag)
+	return ag, err
+}
+
 // exportRaw exports the trace as a raw dump in JSON format into a file
 // in the current working directory with a name of 'rbiam-trace-NNNNNNNNNN' with
 // the NNNNNNNNNN being the Unix timestamp of the creation time, for example:

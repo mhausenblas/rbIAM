@@ -26,8 +26,19 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("Gathering info from IAM and Kubernetes. This may take a bit, please stand by ...")
-	ag = NewAccessGraph(cfg)
+	offline := os.Getenv("RBIAM_OFFLINE")
+	switch {
+	case offline != "":
+		fmt.Println("Loading IAM and Kubernetes info from local dump.")
+		ag, err = load("rbiam-offline.json")
+		if err != nil {
+			pwarning(fmt.Sprintf("Can't import access graph: %v\n", err))
+		}
+	default:
+		fmt.Println("Gathering info from IAM and Kubernetes. This may take a bit, please stand by.")
+		ag = NewAccessGraph(cfg)
+	}
+
 	// fmt.Println(ag)
 	var prefix string
 	tracecntr := 0
