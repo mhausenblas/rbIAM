@@ -18,6 +18,7 @@ func toplevel(d prompt.Document) []prompt.Suggest {
 		{Text: "trace", Description: "Start tracing"},
 		{Text: "export-raw", Description: "Stop tracing and export trace to JSON dump in current working directory"},
 		{Text: "export-graph", Description: "Stop tracing and export trace as DOT file in current working directory"},
+		{Text: "dump", Description: "Export access graph as a JSON dump in current working directory"},
 		{Text: "help", Description: "Explain how it works and show available commands"},
 		{Text: "quit", Description: "Terminate the interactive session and quit"},
 	}
